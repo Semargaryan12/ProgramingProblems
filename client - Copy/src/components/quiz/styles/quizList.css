@@ -1,0 +1,212 @@
+/* ================= CODE QUIZ LIST ADMIN ================= */
+.code-quiz-list-admin {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06),
+              0 4px 12px rgba(0, 0, 0, 0.04);
+  color: #1e293b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.code-quiz-list-admin:hover,
+.code-quiz-list-admin:focus-within {
+  box-shadow: 0 16px 48px rgba(37, 99, 235, 0.1),
+              0 6px 16px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Page title */
+.code-page-title {
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 32px;
+  letter-spacing: -0.02em;
+}
+
+.code-page-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* Error and empty states */
+.code-error {
+  color: #ef4444;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 20px;
+  background: #fef2f2;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  margin: 20px 0;
+}
+
+.code-no-quizzes {
+  text-align: center;
+  color: #64748b;
+  font-size: 1.15rem;
+  font-style: italic;
+  padding: 60px 20px;
+}
+
+/* Quiz list */
+.code-quiz-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual quiz item */
+.code-quiz-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.code-quiz-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.07);
+  border-color: #60a5fa;
+  background: #ffffff;
+}
+
+/* Quiz title / main content area */
+.code-quiz-title {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+/* Editing input (when renaming) */
+.code-edit-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  transition: all 0.2s ease;
+}
+
+.code-edit-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  outline: none;
+}
+
+/* Buttons group */
+.code-admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Base admin button style */
+.code-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+
+.code-admin-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.code-admin-btn:active {
+  transform: translateY(0);
+}
+
+/* Edit */
+.code-edit-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.code-edit-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Delete */
+.code-delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.code-delete-btn:hover {
+  background: #dc2626;
+}
+
+/* Save */
+.code-save-btn {
+  background: #10b981;
+  color: white;
+}
+
+.code-save-btn:hover {
+  background: #059669;
+}
+
+/* Cancel */
+.code-cancel-btn {
+  background: #6b7280;
+  color: white;
+}
+
+.code-cancel-btn:hover {
+  background: #4b5563;
+}
+
+/* Spinner / loading state */
+.code-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.code-spinner {
+  width: 44px;
+  height: 44px;
+  border: 5px solid #e2e8f0;
+  border-top: 5px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

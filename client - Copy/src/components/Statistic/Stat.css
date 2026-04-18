@@ -1,0 +1,62 @@
+/* PivotTablePage.css */
+
+.pivot-container {
+     max-width: 800px;
+     margin: 0 auto;
+     padding: 2rem;
+     background-color: #f4f6f9;
+     border-radius: 12px;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+     font-family: Arial, sans-serif;
+     color: #333;
+   }
+   
+   .pivot-container h1 {
+     font-size: 2rem;
+     color: #2f5597;
+     margin-bottom: 1rem;
+   }
+   
+   .pivot-container h2, 
+   .pivot-container h3, 
+   .pivot-container h4 {
+     color: #385723;
+     margin-top: 1.5rem;
+   }
+   
+   .pivot-container ul, 
+   .pivot-container ol {
+     padding-left: 1.5rem;
+     margin-bottom: 1rem;
+   }
+   
+   .pivot-container table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-top: 1rem;
+     background-color: #fff;
+   }
+   
+   .pivot-container table th,
+   .pivot-container table td {
+     border: 1px solid #ccc;
+     padding: 8px 12px;
+     text-align: left;
+   }
+   
+   .pivot-container table th {
+     background-color: #ddebf7;
+     color: #1f4e78;
+   }
+   
+
+   .search-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 60%;
+    max-width: 400px;
+  }
+  

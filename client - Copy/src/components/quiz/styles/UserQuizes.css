@@ -1,0 +1,165 @@
+/* ================= DARK THEME - QUIZ ANSWERS / RESULTS SECTION ================= */
+.code-lab-answers-section {
+  width: 100%;
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 1.8rem 1.6rem 2rem;
+  background: #dfdfdf;
+  border-radius: 16px;
+  border: 1px solid #2a3349;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 242, 234, 0.08);
+  color: #d1d5db;
+  font-family: "Fira Code", "JetBrains Mono", monospace;
+}
+
+/* ================= HEADINGS & STATUS ================= */
+.code-lab-answers-section h2,
+.code-lab-answers-section h3 {
+  color: #e2e8f0;
+  font-weight: 600;
+  margin: 0 0 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.code-lab-answers-section h2 {
+  font-size: 1.45rem;
+  text-align: center;
+  background: linear-gradient(90deg, #00f2ea, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Error message */
+.code-error-message {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  padding: 1rem 1.4rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Loading / empty states */
+.code-loading,
+.code-no-quizzes {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1.05rem;
+  padding: 2.5rem 1rem;
+  font-style: italic;
+}
+
+.code-loading {
+  color: #00f2ea;
+  font-weight: 500;
+}
+
+/* ================= ANSWER LIST ================= */
+.code-lab-answers-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* Individual answer item */
+.code-lab-answer-item {
+  background: #1e2538;
+  border: 1px solid #2a3349;
+  border-left: 4px solid #00f2ea;
+  border-radius: 10px;
+  padding: 1.25rem 1.4rem;
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover effect */
+.code-lab-answer-item:hover {
+  background: #252f48;
+  border-color: #00f2ea88;
+  transform: translateX(4px);
+  box-shadow: 0 6px 16px rgba(0, 242, 234, 0.12);
+}
+
+/* Subtle glow line on hover */
+.code-lab-answer-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 242, 234, 0.06) 50%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.code-lab-answer-item:hover::after {
+  opacity: 1;
+}
+
+/* Text content */
+.code-lab-answer-item p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  color: #cbd5e1;
+  font-size: 0.98rem;
+}
+
+.code-lab-answer-item strong {
+  color: #00f2ea;
+  font-weight: 600;
+}
+
+/* Correct / incorrect indicators (add these classes as needed) */
+.code-lab-answer-item.correct {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.code-lab-answer-item.incorrect {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.code-lab-answer-item .status-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
+  border-radius: 6px;
+  margin-left: 0.6rem;
+  vertical-align: middle;
+}
+
+.code-lab-answer-item.correct .status-label {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+
+.code-lab-answer-item.incorrect .status-label {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 640px) {
+  .code-lab-answers-section {
+    margin: 1.5rem 0.8rem;
+    padding: 1.4rem 1.2rem;
+  }
+
+  .code-lab-answer-item {
+    padding: 1.1rem 1.2rem;
+  }
+}

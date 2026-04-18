@@ -1,0 +1,140 @@
+/* ============================= */
+/* Root variables for theme      */
+/* ============================= */
+:root {
+  /* Colors */
+  --color-background: #f5f7fa;      /* Soft light background */
+  --color-primary: #4a90e2;         /* Soft blue for highlights/buttons */
+  --color-secondary: #50e3c2;       /* Accent color */
+  --color-text: #333333;            /* Main text color */
+  --color-text-light: #555555;      /* Secondary text */
+  --color-card-background: #ffffff; /* Cards and panels */
+  --color-shadow: rgba(0, 0, 0, 0.1);
+
+  /* Font */
+  --font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Border radius */
+  --radius-small: 6px;
+  --radius-medium: 12px;
+  --radius-large: 20px;
+
+  /* Shadows */
+  --shadow-light: 0 2px 6px var(--color-shadow);
+  --shadow-medium: 0 4px 12px var(--color-shadow);
+  --shadow-heavy: 0 8px 24px var(--color-shadow);
+
+  /* Spacing */
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 32px;
+}
+
+/* ============================= */
+/* Global styles                 */
+/* ============================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
+  margin-bottom: var(--spacing-medium);
+}
+
+p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-medium);
+}
+
+/* ============================= */
+/* Cards / Containers            */
+/* ============================= */
+.card {
+  background-color: var(--color-card-background);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-medium);
+  padding: var(--spacing-medium);
+  margin-bottom: var(--spacing-large);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-heavy);
+}
+
+/* ============================= */
+/* Buttons                       */
+/* ============================= */
+button {
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-small);
+  padding: var(--spacing-small) var(--spacing-medium);
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
+}
+
+/* ============================= */
+/* Links                         */
+/* ============================= */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-secondary);
+}
+
+/* ============================= */
+/* Inputs / Forms                */
+/* ============================= */
+input, textarea, select {
+  width: 100%;
+  padding: var(--spacing-small);
+  border: 1px solid #ddd;
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-light);
+  font-family: var(--font-family);
+  margin-bottom: var(--spacing-medium);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+  outline: none;
+}
+
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}

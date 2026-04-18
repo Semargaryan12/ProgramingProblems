@@ -1,0 +1,4 @@
+{
+  "ignore": ["temp_codes/*",  "uploads/*",
+    "videos/*"]
+}

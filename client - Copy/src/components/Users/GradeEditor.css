@@ -1,0 +1,34 @@
+.grade-editor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f9f9f9;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.grade-input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.save-grade-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.save-grade-btn:hover {
+  background-color: #218838;
+}
+
+.save-grade-btn:disabled {
+  background-color: #ccc;
+}

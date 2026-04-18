@@ -1,0 +1,143 @@
+/* ================= VIDEO UPLOAD CONTAINER ================= */
+
+.video-upload-container {
+    padding: 30px;
+    background-color: #ffffff;
+    color: #1e293b;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.video-upload-container h2 {
+    color: #2563eb;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* ================= FORM ================= */
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.upload-form input[type="text"],
+.upload-form input[type="file"] {
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #1e293b;
+    transition: all 0.25s ease;
+}
+
+.upload-form input::placeholder {
+    color: #94a3b8;
+}
+
+.upload-form input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+/* ================= BUTTON ================= */
+
+.upload-form button {
+    background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+}
+
+.upload-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.3);
+}
+
+.upload-form button:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ================= MESSAGE ================= */
+
+.message {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.message.success {
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.message.error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* ================= UPLOADED VIDEOS ================= */
+
+.uploaded-videos {
+    margin-top: 35px;
+}
+
+.uploaded-videos h3 {
+    color: #1e293b;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+
+.uploaded-videos ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Video Item Card */
+.video-item {
+    background-color: #ffffff;
+    padding: 18px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.video-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.video-item h4 {
+    margin-bottom: 12px;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* Video Player */
+video {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 8px;
+}

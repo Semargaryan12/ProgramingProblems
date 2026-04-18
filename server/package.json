@@ -1,0 +1,37 @@
+{
+  "name": "excelserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "migrate": "node migrations/createTables.js",
+    "migrate-down": "node migrations/dropTables.js",
+    "seed": "node seeds/dev/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.2",
+    "express-validator": "^7.2.1",
+    "fs": "^0.0.1-security",
+    "helmet": "^8.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.1",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^8.0.3",
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7",
+    "uuid": "^13.0.0",
+    "xss-clean": "^0.1.4"
+  }
+}

@@ -1,0 +1,264 @@
+/* Page */
+.problems-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f0f4f8;
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #1e293b;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  max-width: 1100px;
+  margin: 0 auto 50px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  padding: 48px 40px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.25);
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.15), transparent 40%);
+}
+
+.header h1 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Back button */
+.back-btn {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  z-index: 2;
+}
+
+.back-btn:hover {
+  background: #ffffff;
+  color: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ================= SECTION ================= */
+
+.section {
+  background: transparent;
+}
+
+.section h2 {
+  font-size: 1.55rem;
+  margin-bottom: 22px;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+}
+
+.section h2::before {
+  content: "";
+  width: 4px;
+  height: 26px;
+  background: linear-gradient(to bottom, #2563eb, #3b82f6);
+  border-radius: 4px;
+}
+
+/* ================= GRID CARDS ================= */
+
+.section ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.section li {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.section li::after {
+  content: "";
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(37, 99, 235, 0.06),
+    transparent
+  );
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section li:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
+  border-color: #3b82f6;
+}
+
+.section li:hover::after {
+  opacity: 1;
+}
+
+/* ================= LINKS & BUTTONS ================= */
+
+.section li a,
+.section li button {
+  appearance: none;
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #1e293b;
+  padding: 22px;
+  width: 100%;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.section li a:hover,
+.section li button:hover {
+  color: #2563eb;
+}
+
+/* ================= TYPE BADGES ================= */
+
+/* PDF */
+/* ================= TYPE BADGES ================= */
+
+.section li .pdf-btn::before {
+  content: "PDF";
+  font-size: 11px;
+  font-weight: 700;
+  background: #ef4444;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 8px; /* Added spacing */
+}
+
+/* Links Badge - Updated to target .link */
+.section li .link::before {
+  content: "🔗";
+  font-size: 1.1rem;
+  margin-right: 8px;
+}
+
+/* Articles - If you use a specific class for articles later */
+.articles-list li a::before {
+  content: "📄";
+  font-size: 1.1rem;
+}
+
+/* ================= EMPTY / STATES ================= */
+
+.empty-text {
+  color: #64748b;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .header {
+    padding: 60px 24px 36px;
+  }
+
+  .header h1 {
+    font-size: 1.7rem;
+  }
+
+  .section ul {
+    grid-template-columns: 1fr;
+  }
+}
+/* Center the loader on the page */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* Adjust height based on your layout */
+  gap: 15px;
+}
+
+/* The Spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #3498db; /* Change this color to match your theme */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* The Animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Optional: Loading text style */
+.loader-container p {
+  font-family: sans-serif;
+  color: #555;
+  font-size: 1.1rem;
+}

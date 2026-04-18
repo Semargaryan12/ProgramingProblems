@@ -1,0 +1,188 @@
+/* ================= ADMIN LAB CONTAINER ================= */
+
+.admin-lab-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* ================= HEADER ================= */
+
+.admin-lab-container h2 {
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* ================= SEARCH INPUT ================= */
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+/* ================= SPINNER ================= */
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= LAB CARD ================= */
+
+.admin-lab-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  transition: all 0.3s ease;
+}
+
+.admin-lab-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.admin-lab-card h3 {
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.admin-lab-card p {
+  margin-bottom: 1rem;
+  color: #475569;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+/* ================= EDIT FORM ================= */
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.edit-form input,
+.edit-form textarea {
+  padding: 14px 18px;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.edit-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* ================= BUTTONS ================= */
+
+.lab-actions {
+  margin-top: 0.5rem;
+}
+
+.lab-actions button,
+.edit-form button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-right: 10px;
+  transition: all 0.25s ease;
+}
+
+/* Edit Button */
+.lab-actions button:first-child {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+}
+
+.lab-actions button:first-child:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.3);
+}
+
+/* Delete Button */
+.lab-actions button:last-child {
+  background-color: #f87171;
+  color: #ffffff;
+}
+
+.lab-actions button:last-child:hover {
+  background-color: #dc2626;
+}
+
+/* Save Button */
+.edit-form button[type="submit"] {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+  color: white;
+}
+
+/* Cancel Button */
+.edit-form button[type="button"] {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.edit-form button[type="button"]:hover {
+  background: #cbd5e1;
+}

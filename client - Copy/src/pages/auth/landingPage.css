@@ -1,0 +1,221 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #1d4ed8;
+  --text-main: #1e293b;
+  --text-muted: #475569;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+}
+
+.landing-container {
+  /* Replace the URL below with your actual image path or a stock photo URL */
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+              url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-main);
+}
+
+/* Header & Navigation */
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 8%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  letter-spacing: -0.5px;
+}
+
+.nav-btn {
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.nav-btn.primary {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  margin-left: 0.5rem;
+}
+
+.nav-btn.primary:hover {
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 80px 10% 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.hero-section p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: var(--primary-color);
+  position: relative;
+}
+
+/* --- Info Grid Section (One Line) --- */
+.info-grid {
+  display: flex; /* Changed from grid to flex for easier one-line control */
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem; /* Reduced gap to fit all 4 in a row */
+  padding: 2rem 5%;
+  overflow-x: auto; /* Adds horizontal scroll on very small screens so it stays in one line */
+}
+
+.info-card {
+  flex: 1; /* Forces all cards to take equal width */
+  min-width: 200px; /* Prevents cards from getting too squished */
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  padding: 1.5rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  background: white;
+}
+
+.info-card .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #0f172a;
+  white-space: nowrap; /* Keeps titles on one line */
+}
+
+.info-card p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* --- Hero Section Refinement --- */
+/* (Swapping H1 and P order visually as per your JSX structure) */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 10% 20px;
+}
+
+.hero-section h1 {
+  order: 2; /* Moves H1 below the paragraph if you prefer that look */
+  font-size: 3rem;
+  margin-top: 10px;
+}
+
+.hero-section p {
+  order: 1;
+  font-size: 1.1rem;
+  max-width: 800px;
+  color: #334155;
+}
+
+/* --- Responsive Behavior --- */
+@media (max-width: 1024px) {
+  .info-grid {
+    flex-wrap: nowrap; 
+    justify-content: flex-start;
+    padding-bottom: 1rem;
+  }
+  
+  /* Custom Scrollbar for the horizontal line on mobile */
+  .info-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+  .info-grid::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+  }
+}
+/* Languages Section */
+.languages-section {
+  text-align: center;
+  padding: 4rem 10%;
+}
+
+.lang-tags {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.lang-tag {
+  padding: 0.6rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.cpp { color: #00599C; border-bottom: 3px solid #00599C; }
+.python { color: #3776AB; border-bottom: 3px solid #3776AB; }
+.js { color: #d97706; border-bottom: 3px solid #F7DF1E; }
+
+/* Footer */
+.landing-footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section h1 { font-size: 2.2rem; }
+  .info-grid { padding: 2rem 5%; }
+} 

@@ -1,0 +1,179 @@
+/* ================= GLOBAL VARIABLES ================= */
+/* :root {
+  --primary-blue: #1e3a8a;
+  --accent-blue: #2563eb;
+  --soft-blue: #3b82f6;
+  --bg-gray: #f0f4f8;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --success-green: #22c55e;
+  --error-red: #ef4444;
+} */
+
+.labs-page-wrapper {
+  background-color: var(--bg-gray); /* Matches problems-page bg */
+  min-height: 100vh;
+  padding: 60px 20px;
+  color: var(--text-dark);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.labs-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.labs-header {
+  text-align: center;
+  margin-bottom: 50px;
+  /* Applying the gradient style from your header */
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+  padding: 40px;
+  border-radius: 20px;
+  color: #ffffff;
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.2);
+}
+
+.labs-header h1 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #ffffff; /* White text on blue background */
+  text-shadow: none;
+}
+
+/* Search Box Custom Style */
+.search-box {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.search-box input {
+  width: 100%;
+  padding: 14px 14px 14px 45px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  color: var(--text-dark);
+  transition: all 0.3s;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--soft-blue);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+/* Lab Cards */
+.labs-grid {
+  display: grid;
+  gap: 25px;
+}
+
+.lab-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.lab-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--soft-blue);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.lab-title {
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.lab-content {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+/* Modern Upload Section */
+.file-drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: all 0.2s;
+  color: var(--soft-blue); /* Professional blue instead of red */
+  background-color: #f8fafc;
+}
+
+.file-drop-zone:hover {
+  border-color: var(--accent-blue);
+  background-color: #eff6ff;
+}
+
+.file-selected {
+  border-style: solid;
+  border-color: var(--success-green);
+  background-color: #f0fdf4;
+  color: var(--success-green);
+}
+
+.file-drop-zone input { display: none; }
+
+.upload-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.btn-upload {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent-blue); /* Solid blue button */
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-upload:hover {
+  background: var(--primary-blue);
+}
+
+.btn-upload:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Status Indicators */
+.status-msg.success { color: var(--success-green); }
+.status-msg.error { color: var(--error-red); }
+
+/* Loading Spinner */
+.spin-icon {
+  font-size: 3rem;
+  color: var(--accent-blue);
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }

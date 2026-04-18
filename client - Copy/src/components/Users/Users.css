@@ -1,0 +1,164 @@
+/* Users.css */
+
+:root {
+  --primary-color: #3f51b5;
+  --secondary-color: #f5f5f5;
+  --text-color: #333;
+  --border-color: #ddd;
+  --danger-color: #e53935;
+  --transition-speed: 0.3s;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+}
+
+.users-container,
+.user-details-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-color);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+  outline: none;
+  transition: border var(--transition-speed);
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+}
+
+.users-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.user-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.user-name {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.no-users,
+.error-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--danger-color);
+  margin-top: 2rem;
+}
+
+.back-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+
+.back-button:hover {
+  background-color: #303f9f;
+}
+
+.section-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collapsible {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-speed) ease;
+  background-color: var(--secondary-color);
+  border-radius: var(--radius);
+  padding: 0 1rem;
+}
+
+.collapsible.open {
+  max-height: 1000px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.quizzes-list {
+  padding: 0.5rem 0;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 5px solid var(--secondary-color);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .users-container,
+  .user-details-container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
