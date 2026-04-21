@@ -3,7 +3,7 @@ import axios from "axios";
 import { refreshAccessToken } from "../components/AuthService/authService"; // Adjust the path if needed
 
 export const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://test4-idpwuabu.b4a.run/api",
   withCredentials: true,
 });
 

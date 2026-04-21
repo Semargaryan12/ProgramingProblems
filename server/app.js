@@ -25,7 +25,7 @@ console.log(client_URL);
 
 app.use(
   cors({
-    origin: client_URL,
+    origin: true,
     methods: "GET, POST, DELETE, PUT",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
