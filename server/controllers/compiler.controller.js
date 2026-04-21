@@ -1,7 +1,10 @@
 const { exec } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const getUUID = async () => {
+  const { v4: uuidv4 } = await import("uuid");
+  return uuidv4();
+};
 
 // Ensure temp directory exists and is absolute
 const tempDir = path.resolve(__dirname, "../temp_codes");
@@ -35,7 +38,7 @@ exports.executeCode = async (req, res) => {
     return res.status(400).json({ error: "Unsupported language" });
   }
 
-  const id = uuidv4();
+const id = await getUUID();
   const fileName = `${id}.${config.ext}`;
   const filePath = path.join(tempDir, fileName);
 
