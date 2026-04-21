@@ -5,10 +5,7 @@ import { performance } from "perf_hooks";
 
 export const codeEx = (code) => {
   return new Promise((resolve) => {
-    const tempFile = path.join(
-      process.cwd(),
-      `temp_${Date.now()}.js`
-    );
+    const tempFile = path.join(process.cwd(), `temp_${Date.now()}.js`);
 
     fs.writeFileSync(tempFile, code);
 
@@ -26,9 +23,9 @@ export const codeEx = (code) => {
           output: stdout || "",
           error: error ? stderr || error.message : null,
           executionTime: Math.round(end - start),
-          passed: !error
+          passed: !error,
         });
-      }
+      },
     );
   });
 };

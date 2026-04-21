@@ -1,0 +1,228 @@
+/* ================= PAGE LAYOUT ================= */
+.admin-page {
+  min-height: 100vh;
+  background:#f5f7fa;
+  padding: 40px 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+/* ================= HEADER ================= */
+.page-header {
+  max-width: 900px;
+  margin: 0 auto 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header h1 {
+  margin: 0;
+}
+
+.count-tag {
+  background: #4caf50;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+/* ================= SECTION ================= */
+.lang-section {
+  max-width: 900px;
+  margin: 0 auto 30px;
+}
+
+.lang-title {
+  margin-bottom: 10px;
+  color: #ddd;
+}
+
+/* ================= LIST ================= */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ================= CARD ================= */
+.item-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-3px);
+}
+
+/* ================= VIEW MODE ================= */
+.view-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cat-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.title-text {
+  color: #333;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ================= EDIT MODE ================= */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.edit-input:focus {
+  border-color: #4caf50;
+}
+
+.edit-btns {
+  display: flex;
+  gap: 10px;
+}
+
+/* ================= BUTTONS (GLOBAL STYLE) ================= */
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+/* EDIT */
+.btn-edit,
+.update-btn {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.btn-edit:hover,
+.update-btn:hover {
+  background-color: #1976d2;
+}
+
+/* DELETE */
+.btn-del,
+.delete-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.btn-del:hover,
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* SAVE / SUBMIT */
+.btn-save,
+.submit-btn {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.btn-save:hover,
+.submit-btn:hover {
+  background-color: #388e3c;
+}
+
+/* CANCEL */
+.btn-cancel,
+.cancel-btn {
+  background-color: #ef0606;
+  color: #fff;
+}
+
+.btn-cancel:hover,
+.cancel-btn:hover {
+  background-color: #350000;
+}
+
+/* ================= LOADER ================= */
+.loader-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #1e1e2f;
+  color: #fff;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #4caf50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================= ERROR ================= */
+.error-message {
+  text-align: center;
+  color: #ff4d4f;
+  margin-top: 50px;
+}
+
+/* ================= EMPTY ================= */
+.empty-box {
+  text-align: center;
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+  .view-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .edit-btns {
+    flex-direction: column;
+  }
+
+  .edit-btns button {
+    width: 100%;
+  }
+}

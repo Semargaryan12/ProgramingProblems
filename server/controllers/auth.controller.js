@@ -3,11 +3,11 @@ const Answer = require("../models/Answer");
 const LaboratorAnswer = require("../models/LaboratorAnswer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+  service: "gmail",
+  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
 });
 const {
   successResponse,
@@ -29,12 +29,12 @@ const register = async (req, res, next) => {
     const normalizedUsername = username.toLowerCase();
 
     const existingUser = await User.findOne({
-      $or: [{ email: normalizedEmail }, { username: normalizedUsername }]
+      $or: [{ email: normalizedEmail }, { username: normalizedUsername }],
     });
 
     if (existingUser) {
       return res.status(409).json({
-        error: "Օգտատերը արդեն գոյություն ունի"
+        error: "Օգտատերը արդեն գոյություն ունի",
       });
     }
 
@@ -51,20 +51,19 @@ const register = async (req, res, next) => {
       email: normalizedEmail,
       password: hashedPassword,
       verificationCode: hashedOTP,
-      verificationExpires: Date.now() + 3600000
+      verificationExpires: Date.now() + 3600000,
     });
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: 'Հաստատում',
-      html: `<p>Կոդ: <b>${otp}</b></p>`
+      subject: "Հաստատում",
+      html: `<p>Կոդ: <b>${otp}</b></p>`,
     });
 
     res.status(201).json({
-      message: "Ստուգեք Ձեր էլ. հասցեն"
+      message: "Ստուգեք Ձեր էլ. հասցեն",
     });
-
   } catch (err) {
     next(err);
   }
@@ -80,7 +79,10 @@ const verifyEmail = async (req, res) => {
       return res.status(400).json({ error: "Սխալ կոդ" });
     }
 
-    const isValid = await bcrypt.compare(code.toString(), user.verificationCode);
+    const isValid = await bcrypt.compare(
+      code.toString(),
+      user.verificationCode,
+    );
 
     if (!isValid || user.verificationExpires < Date.now()) {
       return res.status(400).json({ error: "Ժամկետանց կամ սխալ կոդ" });
@@ -93,7 +95,6 @@ const verifyEmail = async (req, res) => {
     await user.save();
 
     res.json({ message: "Հաստատվեց" });
-
   } catch (err) {
     res.status(500).json({ error: "Սխալ" });
   }
@@ -106,29 +107,27 @@ const login = async (req, res, next) => {
     const normalized = identifier.toLowerCase();
 
     const user = await User.findOne({
-      $or: [
-        { email: normalized },
-        { username: normalized }
-      ]
+      $or: [{ email: normalized }, { username: normalized }],
     });
 
     // Prevent timing attack
-    const fakeHash = "$2a$10$1234567890123456789012uQeH9y9G6sF9l1l1l1l1l1l1l1l1l1l";
+    const fakeHash =
+      "$2a$10$1234567890123456789012uQeH9y9G6sF9l1l1l1l1l1l1l1l1l1l";
 
     const isMatch = await bcrypt.compare(
       password,
-      user ? user.password : fakeHash
+      user ? user.password : fakeHash,
     );
 
     if (!user || !isMatch) {
       return res.status(401).json({
-        error: "Սխալ տվյալներ"
+        error: "Սխալ տվյալներ",
       });
     }
 
     if (!user.isVerified) {
       return res.status(403).json({
-        error: "Խնդրում ենք հաստատել էլ․ հասցեն"
+        error: "Խնդրում ենք հաստատել էլ․ հասցեն",
       });
     }
 
@@ -152,12 +151,11 @@ const login = async (req, res, next) => {
         username: user.username,
         email: user.email,
         role: user.role,
-      }
+      },
     });
-
   } catch (err) {
     console.log(err);
-    
+
     next(err);
   }
 };
@@ -178,7 +176,7 @@ const refresh = async (req, res) => {
     const newAccessToken = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '15m' }
+      { expiresIn: "15m" },
     );
 
     res.json({ accessToken: newAccessToken });
@@ -234,75 +232,77 @@ const getSingleUser = async (req, res) => {
 };
 
 const getMyResults = async (req, res) => {
- try {
-        const userId = req.user.id; 
+  try {
+    const userId = req.user.id;
 
-        const userWithData = await User.findById(userId)
-            .select('-password -refreshToken')
-            .populate({
-                path: 'questionAnswers.questionId',
-                model: 'Question' // Հստակ նշում ենք մոդելի անունը
-            })
-            .populate({
-                path: 'questionAnswers.answerId',
-                model: 'Answer'
-            })
-            .populate({
-                path: 'quizSubmissions.quizId',
-                model: 'Quiz'
-            })
-            .populate({
-                path: 'labSubmissions.labId',
-                model: 'Laborator'
-            })
-            .populate({
-                path: 'labSubmissions.submissionId',
-                model: 'LaboratorAnswer'
-            });
+    const userWithData = await User.findById(userId)
+      .select("-password -refreshToken")
+      .populate({
+        path: "questionAnswers.questionId",
+        model: "Question", // Հստակ նշում ենք մոդելի անունը
+      })
+      .populate({
+        path: "questionAnswers.answerId",
+        model: "Answer",
+      })
+      .populate({
+        path: "quizSubmissions.quizId",
+        model: "Quiz",
+      })
+      .populate({
+        path: "labSubmissions.labId",
+        model: "Laborator",
+      })
+      .populate({
+        path: "labSubmissions.submissionId",
+        model: "LaboratorAnswer",
+      });
 
-        if (!userWithData) {
-            return res.status(404).json({ message: "Օգտատերը չի գտնվել" });
-        }
-
-        res.status(200).json({ success: true, data: userWithData });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+    if (!userWithData) {
+      return res.status(404).json({ message: "Օգտատերը չի գտնվել" });
     }
+
+    res.status(200).json({ success: true, data: userWithData });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
- const gradeAnswer = async (req, res) => {
-    try {
-        const { answerId, grade } = req.body;
+const gradeAnswer = async (req, res) => {
+  try {
+    const { answerId, grade } = req.body;
 
-        const updatedAnswer = await Answer.findByIdAndUpdate(
-            answerId,
-            { grade: grade },
-            { new: true }
-        );
+    const updatedAnswer = await Answer.findByIdAndUpdate(
+      answerId,
+      { grade: grade },
+      { new: true },
+    );
 
-        res.status(200).json({ message: "Գնահատականը հաջողությամբ տեղադրվեց", updatedAnswer });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    res
+      .status(200)
+      .json({ message: "Գնահատականը հաջողությամբ տեղադրվեց", updatedAnswer });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
- const gradeLab = async (req, res) => {
-    try {
-        const { answerId, grade } = req.body;
+const gradeLab = async (req, res) => {
+  try {
+    const { answerId, grade } = req.body;
 
-        const updatedAnswer = await LaboratorAnswer.findByIdAndUpdate(
-            answerId,
-            { grade: grade },
-            { new: true }
-        );
+    const updatedAnswer = await LaboratorAnswer.findByIdAndUpdate(
+      answerId,
+      { grade: grade },
+      { new: true },
+    );
 
-        res.status(200).json({ message: "Գնահատականը հաջողությամբ տեղադրվեց", updatedAnswer });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    res
+      .status(200)
+      .json({ message: "Գնահատականը հաջողությամբ տեղադրվեց", updatedAnswer });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
-
-
 
 module.exports = {
   login,
@@ -314,5 +314,5 @@ module.exports = {
   getMyResults,
   gradeAnswer,
   gradeLab,
-  verifyEmail
+  verifyEmail,
 };

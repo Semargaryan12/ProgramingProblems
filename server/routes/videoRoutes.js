@@ -27,7 +27,7 @@ router.post(
   auth,
   isAdmin,
   upload.single("video"),
-  videoController.uploadVideo
+  videoController.uploadVideo,
 );
 router.delete("/:id", auth, isAdmin, videoController.deleteVideo);
 

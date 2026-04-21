@@ -3,7 +3,6 @@ const QuizSubmission = require("../models/QuizSubmission");
 const User = require("../models/User");
 const ApiError = require("../utils/ApiError");
 
-
 const normalizeLanguage = (lang) => {
   if (!lang) return null;
 
@@ -33,21 +32,24 @@ const createQuiz = async (quizData, userId) => {
   try {
     // 1. Ստուգում ենք՝ արդյոք այս լեզվի համար արդեն կա Final թեստ
     if (quizData.isFinal) {
-      const existingFinal = await Quiz.findOne({ 
-        language: quizData.language, 
-        isFinal: true 
+      const existingFinal = await Quiz.findOne({
+        language: quizData.language,
+        isFinal: true,
       });
 
       if (existingFinal) {
         // Օգտագործում ենք ApiError բարձր մակարդակի սխալի համար
-        throw new ApiError(400, `${quizData.language} լեզվի համար վերջնական թեստն արդեն գոյություն ունի:`);
+        throw new ApiError(
+          400,
+          `${quizData.language} լեզվի համար վերջնական թեստն արդեն գոյություն ունի:`,
+        );
       }
     }
 
     // 2. Ստեղծում ենք թեստը
-    const quiz = new Quiz({ 
-      ...quizData, 
-      createdBy: userId 
+    const quiz = new Quiz({
+      ...quizData,
+      createdBy: userId,
     });
 
     const savedQuiz = await quiz.save();
@@ -66,13 +68,16 @@ const createQuiz = async (quizData, userId) => {
 
     // Մնացած դեպքերում (օրինակ՝ DB սխալներ) լոգավորում ենք և նետում նոր սխալ
     console.error("[QuizService] Unexpected Error:", error);
-    throw new ApiError(500, "Թեստի ստեղծման ընթացքում տեղի է ունեցել սերվերային սխալ:");
+    throw new ApiError(
+      500,
+      "Թեստի ստեղծման ընթացքում տեղի է ունեցել սերվերային սխալ:",
+    );
   }
 };
 const getSingleQuiz = async (quizId) => {
   const quiz = await Quiz.findById(quizId).populate(
     "createdBy",
-    "username email"
+    "username email",
   );
   if (!quiz) throw new ApiError(404, "Quiz not found");
   return quiz;
@@ -86,11 +91,7 @@ const deleteQuiz = async (quizId) => {
 
 const updateQuiz = async (quizId, title) => {
   try {
-    const quiz = await Quiz.findByIdAndUpdate(
-      quizId,
-      { title },
-      { new: true }
-    );
+    const quiz = await Quiz.findByIdAndUpdate(quizId, { title }, { new: true });
     if (!quiz) throw ApiError(404, "Quiz not found");
     return quiz;
   } catch (error) {
@@ -98,7 +99,6 @@ const updateQuiz = async (quizId, title) => {
     throw ApiError(500, "Failed to update quiz");
   }
 };
-
 
 const solveQuiz = async (quizId, userAnswers, userId) => {
   const exists = await QuizSubmission.findOne({ quizId, userId });
@@ -143,19 +143,16 @@ const solveQuiz = async (quizId, userAnswers, userId) => {
   return { score, total };
 };
 
+const checkIfAlreadySolved = async (userId, quizId) => {
+  const existing = await QuizSubmission.findOne({
+    user: userId,
+    quiz: quizId,
+  });
 
-   const  checkIfAlreadySolved = async (userId, quizId)=> {
-    const existing = await QuizSubmission.findOne({
-      user: userId,
-      quiz: quizId,
-    });
-
-    return !!existing;
-  }
-
+  return !!existing;
+};
 
 module.exports = {
-  
   createQuiz,
   getAllQuizzes,
   getSingleQuiz,

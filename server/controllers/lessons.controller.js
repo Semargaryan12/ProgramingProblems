@@ -55,7 +55,6 @@ const createLesson = async (req, res, next) => {
       success: true,
       data: resource,
     });
-
   } catch (err) {
     console.error("Create lesson error:", err);
     next(new ApiError(500, "Սերվերի սխալ"));
@@ -82,11 +81,10 @@ const updateLesson = async (req, res, next) => {
     const resource = await Lessons.findByIdAndUpdate(
       req.params.id,
       { title: req.body.title },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
-    if (!resource)
-      return next(new ApiError(404, "Նյութը չի գտնվել"));
+    if (!resource) return next(new ApiError(404, "Նյութը չի գտնվել"));
 
     res.json(resource);
   } catch (err) {
@@ -98,8 +96,7 @@ const deleteLesson = async (req, res, next) => {
   try {
     const resource = await Lessons.findByIdAndDelete(req.params.id);
 
-    if (!resource)
-      return next(new ApiError(404, "Նյութը չի գտնվել"));
+    if (!resource) return next(new ApiError(404, "Նյութը չի գտնվել"));
 
     res.json({ message: "Ջնջված է" });
   } catch (err) {
@@ -108,4 +105,3 @@ const deleteLesson = async (req, res, next) => {
 };
 
 module.exports = { createLesson, getLessons, updateLesson, deleteLesson };
-

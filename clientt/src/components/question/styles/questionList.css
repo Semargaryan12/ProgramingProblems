@@ -1,0 +1,631 @@
+/*
+  questionList.css
+  Add this to your index.html or global CSS:
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Fira+Code:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+*/
+
+/* ── Tokens ─────────────────────────────────────────── */
+:root {
+  --bg:             #0d1117;
+  --surface:        #161b22;
+  --surface-hover:  #1c2330;
+  --border:         #30363d;
+  --border-focus:   #58a6ff;
+
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
+
+  --accent:         #58a6ff;
+  --accent-dim:     rgba(88, 166, 255, 0.12);
+  --green:          #3fb950;
+  --green-dim:      rgba(63, 185, 80, 0.14);
+  --orange:         #f78166;
+  --orange-dim:     rgba(247, 129, 102, 0.14);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
+
+  --mono:    'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --display: 'Syne', 'DM Sans', sans-serif;
+
+  --transition: 0.18s ease;
+}
+
+/* ── Reset scope ────────────────────────────────────── */
+.workspace-layout *,
+.workspace-layout *::before,
+.workspace-layout *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root layout ────────────────────────────────────── */
+.workspace-layout {
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 32px clamp(16px, 5vw, 60px) 64px;
+  font-family: var(--sans);
+  color: var(--text-primary);
+  position: relative;
+}
+
+/* Subtle dot-grid background */
+.workspace-layout::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.workspace-layout > * { position: relative; z-index: 1; }
+
+/* ── Header ─────────────────────────────────────────── */
+.workspace-header { margin-bottom: 36px; }
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-lang {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ── Search ─────────────────────────────────────────── */
+.search-wrapper {
+  position: relative;
+  flex: 0 1 360px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  pointer-events: none;
+}
+
+.search-wrapper input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  padding: 10px 14px 10px 38px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.search-wrapper input::placeholder { color: var(--text-muted); }
+
+.search-wrapper input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+}
+
+/* ── Questions grid ─────────────────────────────────── */
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+  gap: 20px;
+}
+
+/* ── Question card ──────────────────────────────────── */
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  animation: cardIn 0.35s ease both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.question-card:hover {
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-md), 0 0 0 1px var(--border-focus);
+  transform: translateY(-2px);
+}
+
+.card-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.info { flex: 1; min-width: 0; }
+
+.q-number {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+}
+
+.info h3 {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.description-textbox {
+  width: 100%;
+  min-height: 70px;
+  max-height: 160px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  padding: 10px 12px;
+  resize: vertical;
+  cursor: default;
+  outline: none;
+}
+
+/* ── Open editor button (card) ──────────────────────── */
+.open-editor-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  background: var(--accent);
+  color: #0d1117;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 9px 16px;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  white-space: nowrap;
+}
+
+.open-editor-btn:hover { background: #79b8ff; }
+.open-editor-btn:active { transform: scale(0.97); }
+
+/* ── Editor page ────────────────────────────────────── */
+.editor-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Editor header bar ──────────────────────────────── */
+.editor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 18px;
+  flex-wrap: wrap;
+}
+
+/* ── Back button — ALWAYS FULLY VISIBLE ─────────────── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  background: var(--surface-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 16px;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  white-space: nowrap;
+  /* Ensure text label is never hidden */
+  overflow: visible;
+}
+
+.back-btn span {
+  display: inline !important; /* Force always visible */
+}
+
+.back-btn:hover {
+  background: var(--border);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.back-btn:active { transform: scale(0.97); }
+
+/* ── Editor title ───────────────────────────────────── */
+.editor-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.editor-title-text {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lang-pill {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(88, 166, 255, 0.25);
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Editor action buttons ──────────────────────────── */
+.editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 9px 16px;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition), transform var(--transition);
+  white-space: nowrap;
+}
+
+.action-btn:active { transform: scale(0.97); }
+
+.action-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.run-btn {
+  background: #21262d;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.run-btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.download-btn {
+  background: var(--surface-hover);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.download-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.submit-btn {
+  background: var(--green-dim);
+  color: var(--green);
+  border: 1px solid rgba(63, 185, 80, 0.35);
+  font-weight: 600;
+}
+.submit-btn:hover:not(:disabled) { background: rgba(63, 185, 80, 0.22); }
+
+/* ── Monaco wrapper ─────────────────────────────────── */
+.monaco-wrapper {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  resize: vertical;
+  height: 440px;
+  min-height: 200px;
+  max-height: 80vh;
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Terminal ───────────────────────────────────────── */
+.terminal {
+  background: #010409;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-family: var(--mono);
+  box-shadow: var(--shadow-md);
+}
+
+.terminal-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+}
+
+.terminal-header svg { color: var(--accent); }
+
+.terminal-clear {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: color var(--transition), border-color var(--transition);
+}
+.terminal-clear:hover { color: var(--orange); border-color: var(--orange); }
+
+.terminal-body {
+  padding: 16px 20px;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #7ee787;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+/* ── Spinner ────────────────────────────────────────── */
+.spinner-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.ring-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Button dot loader ──────────────────────────────── */
+.btn-dot-loader {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* ── Empty state ────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 80px 20px;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: var(--border);
+}
+
+/* ── Toast ──────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  max-width: 360px;
+  box-shadow: var(--shadow-lg);
+  animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(40px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.toast--success {
+  background: rgba(63, 185, 80, 0.15);
+  border: 1px solid rgba(63, 185, 80, 0.4);
+  color: var(--green);
+}
+
+.toast--error {
+  background: rgba(247, 129, 102, 0.15);
+  border: 1px solid rgba(247, 129, 102, 0.4);
+  color: var(--orange);
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: auto;
+  padding: 0 4px;
+  line-height: 1;
+  font-family: var(--sans);
+}
+.toast-close:hover { opacity: 1; }
+
+/* ── Custom scrollbar ───────────────────────────────── */
+.workspace-layout ::-webkit-scrollbar        { width: 6px; height: 6px; }
+.workspace-layout ::-webkit-scrollbar-track  { background: transparent; }
+.workspace-layout ::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 3px; }
+.workspace-layout ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .questions-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    flex: unset;
+  }
+
+  .editor-header {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .editor-title {
+    order: 2;
+    width: 100%;
+  }
+
+  .editor-actions {
+    order: 3;
+    width: 100%;
+    justify-content: flex-end;
+    margin-left: 0;
+  }
+
+  /* Hide only action button text labels on mobile — NOT the back button */
+  .action-btn span { display: none; }
+
+  /* Back button label stays visible always */
+  .back-btn span { display: inline !important; }
+
+  .monaco-wrapper { height: 320px; }
+}
+
+@media (max-width: 480px) {
+  .workspace-layout {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .question-card { padding: 16px; }
+
+  .card-main {
+    flex-direction: column;
+  }
+
+  .open-editor-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

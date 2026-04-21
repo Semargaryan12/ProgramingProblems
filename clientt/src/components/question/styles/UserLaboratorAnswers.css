@@ -1,0 +1,218 @@
+/* ROOT LAYOUT */
+.workspace-layout {
+  padding: 30px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.workspace-header {
+  margin-bottom: 30px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.workspace-header h2 {
+  color: #1e293b;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.badge {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* SEARCH */
+.search-wrapper input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  outline: none;
+  transition: 0.2s;
+}
+
+.search-wrapper input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* GRID */
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 25px;
+}
+
+/* CARD */
+.question-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.question-card.active {
+  border-color: #2563eb;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.info h3 {
+  color: #0f172a;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+/* DESCRIPTION TEXTAREA */
+.description-textbox {
+  width: 100%;
+  min-height: 80px;
+  max-height: 200px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.9rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background-color: #2563eb; /* Հիմնական նոր կապույտը */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.run-btn {
+  background-color: #334155;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.run-btn:hover {
+  background-color: #1e293b;
+}
+
+/* MONACO WRAPPER WITH RESIZE */
+.monaco-wrapper {
+  margin-top: 20px;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  
+  /* Այս հատվածը թույլ է տալիս քաշելով մեծացնել */
+  resize: vertical;
+  overflow: auto;
+  height: 350px; 
+  min-height: 200px;
+}
+
+/* TERMINAL */
+.terminal {
+  margin-top: 15px;
+  background: #0f172a;
+  color: #38bdf8;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: 'Fira Code', monospace;
+}
+
+.terminal-header {
+  background: #1e293b;
+  padding: 8px 15px;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.terminal pre {
+  padding: 15px;
+  margin: 0;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+/* LOADERS */
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .questions-grid {
+    grid-template-columns: 1fr;
+  }
+}

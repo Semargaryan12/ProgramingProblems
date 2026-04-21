@@ -1,13 +1,13 @@
 const Laborator = require("../models/Laborator");
 const LaboratorAnswer = require("../models/LaboratorAnswer");
 const User = require("../models/User");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
- const createLaborator = async (req, res) => {
+const createLaborator = async (req, res) => {
   try {
     const laborator = new Laborator(req.body);
     console.log(laborator);
-    
+
     await laborator.save();
     res.status(201).json(laborator);
   } catch (err) {
@@ -15,12 +15,12 @@ const mongoose = require('mongoose');
   }
 };
 
- const getAllLaborators = async (req, res) => {
+const getAllLaborators = async (req, res) => {
   const labs = await Laborator.find();
   res.json(labs);
 };
 
- const getLaborator = async (req, res) => {
+const getLaborator = async (req, res) => {
   try {
     const laborator = await Laborator.findById(req.params.id);
     if (!laborator)
@@ -31,12 +31,12 @@ const mongoose = require('mongoose');
   }
 };
 
- const updateLaborator = async (req, res) => {
+const updateLaborator = async (req, res) => {
   try {
     const laborator = await Laborator.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true },
     );
     if (!laborator)
       return res.status(404).json({ message: "Laborator not found" });
@@ -58,7 +58,7 @@ const deleteLaborator = async (req, res) => {
 
     // 2️⃣ Get all LaboratorAnswer IDs related to this laborator
     const answers = await LaboratorAnswer.find({ laboratorId });
-    const answerIds = answers.map(a => a._id);
+    const answerIds = answers.map((a) => a._id);
 
     // 3️⃣ Delete laborator answers
     await LaboratorAnswer.deleteMany({ laboratorId });
@@ -69,20 +69,16 @@ const deleteLaborator = async (req, res) => {
       {
         $pull: {
           labSubmissions: {
-            $or: [
-              { labId: laboratorId },
-              { submissionId: { $in: answerIds } }
-            ]
-          }
-        }
-      }
+            $or: [{ labId: laboratorId }, { submissionId: { $in: answerIds } }],
+          },
+        },
+      },
     );
 
     // 5️⃣ Delete laborator
     await Laborator.findByIdAndDelete(laboratorId);
 
     res.json({ message: "Laborator and related data deleted successfully" });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -91,10 +87,12 @@ const deleteLaborator = async (req, res) => {
 
 const submitAnswer = async (req, res) => {
   try {
-    const { laboratorId } = req.body;  
+    const { laboratorId } = req.body;
     const file = req.file;
     if (!laboratorId || !mongoose.Types.ObjectId.isValid(laboratorId)) {
-      return res.status(400).json({ message: "Invalid or missing laboratorId" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or missing laboratorId" });
     }
 
     const existing = await LaboratorAnswer.findOne({
@@ -107,12 +105,12 @@ const submitAnswer = async (req, res) => {
     }
 
     const answer = new LaboratorAnswer({
-      laboratorId,      
+      laboratorId,
       userId: req.user._id,
       filename: req.file.filename,
     });
 
-    await answer.save(); 
+    await answer.save();
     console.log("File uploaded and saved:", file.path);
     await User.findByIdAndUpdate(req.user._id, {
       $push: {
@@ -131,16 +129,13 @@ const submitAnswer = async (req, res) => {
   }
 };
 
-
- const getAnswersByUserId = async (req, res) => {
+const getAnswersByUserId = async (req, res) => {
   try {
     const userId = req.params.userId;
     const answers = await LaboratorAnswer.find({ userId })
-    .populate("laboratorId", "title")
-    .exec();
-  
-  
-    
+      .populate("laboratorId", "title")
+      .exec();
+
     const formattedAnswers = answers.map((ans) => ({
       _id: ans._id,
       submittedAt: ans.submittedAt,
@@ -152,11 +147,18 @@ const submitAnswer = async (req, res) => {
     res.status(200).json({ success: true, data: formattedAnswers });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Սխալ լաբ. պատասխանների բեռնումում" });
+    res
+      .status(500)
+      .json({ success: false, message: "Սխալ լաբ. պատասխանների բեռնումում" });
   }
 };
 
-
 module.exports = {
-createLaborator, getAllLaborators, getLaborator, updateLaborator, deleteLaborator, submitAnswer, getAnswersByUserId
-}
+  createLaborator,
+  getAllLaborators,
+  getLaborator,
+  updateLaborator,
+  deleteLaborator,
+  submitAnswer,
+  getAnswersByUserId,
+};

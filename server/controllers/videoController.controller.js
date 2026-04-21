@@ -45,7 +45,7 @@ const streamVideo = (req, res) => {
     const head = {
       "Content-Length": fileSize,
       "Content-Type": "video/mp4",
-      "Accept-Ranges": "bytes", 
+      "Accept-Ranges": "bytes",
     };
     res.writeHead(200, head);
     fs.createReadStream(filePath).pipe(res);
@@ -54,9 +54,9 @@ const streamVideo = (req, res) => {
 
 const getAllVideos = async (req, res) => {
   try {
-   const { language } = req.query;
+    const { language } = req.query;
 
-const filter = language ? { language } : {};
+    const filter = language ? { language } : {};
 
     const videos = await Video.find(filter);
 
@@ -111,6 +111,9 @@ const uploadVideo = async (req, res) => {
   }
 };
 
-module.exports= {
-  streamVideo, getAllVideos, deleteVideo, uploadVideo
-}
+module.exports = {
+  streamVideo,
+  getAllVideos,
+  deleteVideo,
+  uploadVideo,
+};

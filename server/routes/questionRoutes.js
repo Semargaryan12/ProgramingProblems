@@ -6,7 +6,13 @@ const isAdmin = require("../middlewares/isAdmin");
 const upload = require("../middlewares/upload");
 
 // Admin Routes
-router.post("/", auth, isAdmin, upload.single("hintFile"), controller.createQuestion);
+router.post(
+  "/",
+  auth,
+  isAdmin,
+  upload.single("hintFile"),
+  controller.createQuestion,
+);
 
 router.put("/:id", auth, isAdmin, controller.updateQuestion);
 
@@ -17,14 +23,17 @@ router.get("/", auth, controller.getQuestions);
 
 router.get("/:id", auth, controller.getQuestion);
 
-
-router.post("/:id/answerq", auth, upload.single("file"), controller.submitAnswer);
+router.post(
+  "/:id/answerq",
+  auth,
+  upload.single("file"),
+  controller.submitAnswer,
+);
 
 // Admin Routes
 
-
 router.get("/qanswer/:id", auth, controller.questionsAnswer);
 
-router.get('/userq/:userId', controller.getAnswersByUserId);
+router.get("/userq/:userId", controller.getAnswersByUserId);
 
 module.exports = router;

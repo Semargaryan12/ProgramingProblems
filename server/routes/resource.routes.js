@@ -1,5 +1,10 @@
 const express = require("express");
-const { createResource, getRes, updateResource, deleteResource } = require("../controllers/resource.controller.js");
+const {
+  createResource,
+  getRes,
+  updateResource,
+  deleteResource,
+} = require("../controllers/resource.controller.js");
 const { upload } = require("../config/multer.js");
 const { validateResource } = require("../middlewares/validate.middleware.js");
 

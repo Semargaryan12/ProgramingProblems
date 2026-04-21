@@ -6,7 +6,7 @@ const authRoutes = require("./routes/auth.routes");
 const quizRoutes = require("./routes/quiz.routes");
 const videoRoutes = require("./routes/videoRoutes");
 const questionRoutes = require("./routes/questionRoutes");
-const resourceRoutes =  require("./routes/resource.routes.js");
+const resourceRoutes = require("./routes/resource.routes.js");
 const { errorHandler } = require("./middlewares/error.middleware.js");
 const labsRoutes = require("./routes/labsRoutes");
 const lessonsRoutes = require("./routes/lessons.router.js");
@@ -23,14 +23,13 @@ const app = express();
 const client_URL = process.env.client_URL?.replace(/\/$/, "");
 console.log(client_URL);
 
-
 app.use(
   cors({
     origin: client_URL,
     methods: "GET, POST, DELETE, PUT",
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
 );
 
 app.use(cookieParser());

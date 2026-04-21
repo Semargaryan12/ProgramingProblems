@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
  verificationCode: { type: String },
  verificationExpires: { type: Date },
+ pendingEmail: {
+  type: String,
+  default: null,
+},
 
   questionAnswers: [
     {

@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const 
-{
+const {
   createLaborator,
   getAllLaborators,
   getLaborator,
   updateLaborator,
   deleteLaborator,
   submitAnswer,
-  getAnswersByUserId 
+  getAnswersByUserId,
 } = require("../controllers/labsController.controller");
 
 const auth = require("../middlewares/authMiddleware");
@@ -26,7 +25,6 @@ router.delete("/:id", auth, isAdmin, deleteLaborator);
 router.get("/", auth, getAllLaborators);
 
 router.get("/:id", auth, getLaborator);
-
 
 router.post("/:id/answer", auth, upload.single("file"), submitAnswer);
 

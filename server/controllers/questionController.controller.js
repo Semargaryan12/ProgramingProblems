@@ -1,7 +1,7 @@
 const Question = require("../models/Question");
 const Answer = require("../models/Answer");
 const User = require("../models/User");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 
@@ -13,7 +13,6 @@ const getQuestions = async (req, res) => {
 
     let filter = {};
 
-    // If language provided → filter
     if (language) {
       if (!VALID_LANGUAGES.includes(language)) {
         return res.status(400).json({
@@ -56,7 +55,7 @@ const createQuestion = async (req, res) => {
       language,
       questionText,
       subQuestion,
-      hintUrl // Saved to DB
+      hintUrl, // Saved to DB
     });
 
     res.status(201).json(newQuestion);
@@ -73,7 +72,7 @@ const updateQuestion = async (req, res) => {
     const updated = await Question.findByIdAndUpdate(
       id,
       { questionText, subQuestion }, // Pass as ONE object
-      { new: true }
+      { new: true },
     );
     res.json(updated);
   } catch (err) {
@@ -97,7 +96,7 @@ const deleteQuestion = async (req, res) => {
 
     // 2️⃣ Get all related answers
     const answers = await Answer.find({ questionId: id });
-    const answerIds = answers.map(a => a._id);
+    const answerIds = answers.map((a) => a._id);
 
     // 3️⃣ Delete files from uploads folder
     for (const answer of answers) {
@@ -107,7 +106,7 @@ const deleteQuestion = async (req, res) => {
           "..",
           "uploads",
           "questions",
-          answer.filename
+          answer.filename,
         );
 
         if (fs.existsSync(filePath)) {
@@ -125,13 +124,10 @@ const deleteQuestion = async (req, res) => {
       {
         $pull: {
           questionAnswers: {
-            $or: [
-              { questionId: id },
-              { answerId: { $in: answerIds } }
-            ]
-          }
-        }
-      }
+            $or: [{ questionId: id }, { answerId: { $in: answerIds } }],
+          },
+        },
+      },
     );
 
     // 6️⃣ Delete question
@@ -139,9 +135,9 @@ const deleteQuestion = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Question, answers, files, and user references deleted successfully",
+      message:
+        "Question, answers, files, and user references deleted successfully",
     });
-
   } catch (error) {
     console.error("Delete Question Error:", error);
     res.status(500).json({ message: "Server error" });
@@ -151,15 +147,12 @@ const deleteQuestion = async (req, res) => {
 const getQuestion = async (req, res) => {
   try {
     const question = await Question.findById(req.params.id);
-    
 
     if (!question) {
       return res.status(404).json({ message: "Question not found" });
     }
 
-    res.json({ text: question.questionText,
-      createdAt: question.createdAt
-    });
+    res.json({ text: question.questionText, createdAt: question.createdAt });
   } catch (err) {
     console.error("Error fetching question:", err);
     res.status(500).json({ message: "Server error" });
@@ -170,8 +163,10 @@ const questionsAnswer = async (req, res) => {
   const answerId = req.params.id;
   try {
     const answer = await Answer.findById(answerId);
-    
-    res.status(200).json({ message: answer.filename, date: answer.submittedAt });
+
+    res
+      .status(200)
+      .json({ message: answer.filename, date: answer.submittedAt });
   } catch (error) {
     console.log(error);
   }
@@ -210,20 +205,19 @@ const submitAnswer = async (req, res) => {
     const newAnswer = await Answer.create({
       questionId,
       userId,
-      filename: req.file.filename
+      filename: req.file.filename,
     });
 
     await User.findByIdAndUpdate(userId, {
       $push: {
         questionAnswers: {
           questionId,
-          answerId: newAnswer._id
-        }
-      }
+          answerId: newAnswer._id,
+        },
+      },
     });
 
     return res.json({ success: true });
-
   } catch (err) {
     console.error("🔥 FINAL ERROR:", err);
     return res.status(500).json({ message: err.message });
@@ -235,11 +229,9 @@ const getAnswersByUserId = async (req, res) => {
     const userId = req.params.userId;
 
     const answers = await Answer.find({ userId })
-    .populate("questionId", "questionText")
-    .exec();
-  
-  
-    
+      .populate("questionId", "questionText")
+      .exec();
+
     const formattedAnswers = answers.map((ans) => ({
       _id: ans._id,
       submittedAt: ans.submittedAt,
@@ -247,15 +239,24 @@ const getAnswersByUserId = async (req, res) => {
       question: ans.questionId?.questionText || "Անհայտ լաբորատոր",
       excelUrl: `/uploads/questions/${ans.filename}`,
     }));
- console.log(formattedAnswers);
- 
+    console.log(formattedAnswers);
+
     res.status(200).json({ success: true, data: formattedAnswers });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Սխալ լաբ. պատասխանների բեռնումում" });
+    res
+      .status(500)
+      .json({ success: false, message: "Սխալ լաբ. պատասխանների բեռնումում" });
   }
 };
 
 module.exports = {
-  createQuestion, updateQuestion, deleteQuestion, getQuestions, getQuestion, questionsAnswer, submitAnswer, getAnswersByUserId
-}
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+  getQuestions,
+  getQuestion,
+  questionsAnswer,
+  submitAnswer,
+  getAnswersByUserId,
+};

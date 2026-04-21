@@ -1,0 +1,196 @@
+/*
+  Footer.css — matches AdminNavbar dark design system
+  Same tokens: --nav-bg, --nav-border, #58a6ff accent, #3fb950 green
+  Font: Syne (display) + DM Sans (body) — loaded via AdminNavbar's import
+*/
+
+/* ── Show / Hide animation ──────────────────────────── */
+.cl-footer {
+  background: #0d1117;
+  border-top: 1px solid #21262d;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  overflow: hidden;
+
+  /* Slide-up reveal */
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity    0.35s ease,
+    transform  0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.cl-footer--show {
+  max-height: 400px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cl-footer--hide {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+/* ── Inner layout ───────────────────────────────────── */
+.cl-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 36px clamp(20px, 6vw, 80px) 28px;
+}
+
+/* ── Brand / Logo block ─────────────────────────────── */
+.cl-footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.cl-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  user-select: none;
+}
+
+.footer-logo-svg {
+  width: 38px;
+  height: 38px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cl-footer-logo:hover .footer-logo-svg {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.cl-footer-logo-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #e6edf3;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.cl-footer-logo-accent {
+  color: #58a6ff;
+}
+
+.cl-footer-tagline {
+  font-size: 0.82rem;
+  color: #484f58;
+  letter-spacing: 0.04em;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ── Vertical divider ───────────────────────────────── */
+.cl-footer-divider {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, #30363d, transparent);
+  flex-shrink: 0;
+}
+
+/* ── Contact items ──────────────────────────────────── */
+.cl-footer-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cl-footer-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: rgba(230, 237, 243, 0.65);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.cl-footer-item:hover {
+  color: #e6edf3;
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateX(4px);
+}
+
+.cl-footer-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(88, 166, 255, 0.08);
+  border: 1px solid rgba(88, 166, 255, 0.2);
+  color: #58a6ff;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.cl-footer-item:hover .cl-footer-item-icon {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: rgba(88, 166, 255, 0.4);
+}
+
+.cl-footer-item-text {
+  font-size: 0.93rem;
+  font-weight: 500;
+}
+
+/* ── Bottom bar ─────────────────────────────────────── */
+.cl-footer-bottom {
+  border-top: 1px solid #21262d;
+  padding: 14px 20px;
+  text-align: center;
+}
+
+.cl-footer-bottom p {
+  font-size: 0.8rem;
+  color: #484f58;
+  letter-spacing: 0.02em;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .cl-footer-inner {
+    flex-direction: column;
+    gap: 24px;
+    padding: 28px 20px 20px;
+  }
+
+  .cl-footer-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #30363d, transparent);
+  }
+
+  .cl-footer-contacts {
+    width: 100%;
+    align-items: center;
+  }
+}
+
+/* ── Layout helpers (keep from original) ────────────── */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout main {
+  flex: 1;
+}
