@@ -2,7 +2,8 @@ import axios from "axios";
 import { refreshAccessToken } from "../components/AuthService/authService";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
+  // ✅ Use REACT_APP_ prefix for CRA, not NEXT_PUBLIC_
+  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000/api",
   withCredentials: true,
 });
 
@@ -45,7 +46,7 @@ api.interceptors.response.use(
 
       try {
         const { accessToken } = await refreshAccessToken();
-        localStorage.setItem("accessToken", accessToken); // ✅ persist new token
+        localStorage.setItem("accessToken", accessToken);
         originalRequest.headers["Authorization"] = "Bearer " + accessToken;
         processQueue(null, accessToken);
         return api(originalRequest);
