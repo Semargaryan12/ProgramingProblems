@@ -34,7 +34,7 @@ const QuizListAdmin = () => {
     };
 
     fetchQuizzes();
-  }, [navigate, user]);
+  }, [navigate]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Վստա՞հ եք, որ ուզում եք ջնջել այս թեստը։")) return;

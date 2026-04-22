@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import "./ProgrammingProblems.css";
 import { LanguageContext } from "../../context/LanguageContext"; 
 const API_URL = "http://localhost:5000";
