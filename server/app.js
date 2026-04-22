@@ -25,36 +25,32 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "http://localhost:5000",
   process.env.CLIENT_URL,
 ]
   .filter(Boolean)
-  .map((o) => o.replace(/\/$/, "")); // normalize trailing slashes
+  .map((o) => o.replace(/\/$/, ""));
 
-console.log("Allowed origins:", allowedOrigins);
-
-// ✅ CORS must come before cookieParser and routes
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow server-to-server / curl / Postman (no origin)
       if (!origin) return callback(null, true);
 
       const normalized = origin.replace(/\/$/, "");
+
       if (allowedOrigins.includes(normalized)) {
         return callback(null, true);
       }
 
-      console.warn("CORS blocked for origin:", origin);
+      // ✅ Detailed log so you can see exactly what's being blocked
+      console.warn("❌ CORS blocked:", { origin, allowedOrigins });
       return callback(new Error("CORS blocked for: " + origin));
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+  })
 );
 
-// ✅ Handle preflight for all routes explicitly
 app.options("*", cors());
 
 app.use(cookieParser());
@@ -62,7 +58,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/videos/files", express.static(path.join(__dirname, "videos")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
+console.log("CLIENT_URL env:", process.env.CLIENT_URL);
+console.log("Allowed origins:", allowedOrigins);
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
