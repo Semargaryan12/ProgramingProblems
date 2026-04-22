@@ -9,7 +9,7 @@ const basicAxios = axios.create({
 
 export const loginService = async (identifier, password) => {
   try {
-    const { data } = await api.post("/auth/login", { identifier, password });
+    const { data } = await api.post("auth/login", { identifier, password });
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("user", JSON.stringify(data.user));
     return data;
