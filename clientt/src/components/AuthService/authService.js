@@ -3,7 +3,8 @@ import { api } from "../../api/api";
 
 // ✅ basicAxios must also use the env var — never hardcode localhost
 const basicAxios = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000/api",
+  baseURL:
+    process.env.REACT_APP_BASE_URL || "programingschoolol-1c0ok92e.b4a.run/api",
   withCredentials: true,
 });
 
@@ -15,7 +16,7 @@ export const loginService = async (identifier, password) => {
     return data;
   } catch (err) {
     console.log(err);
-    
+
     throw new Error(err.response?.data?.error || "Սխալ");
   }
 };

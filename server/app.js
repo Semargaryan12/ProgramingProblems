@@ -43,11 +43,10 @@ const corsOptions = {
 };
 
 // ✅ Preflight must be FIRST before any other middleware
-app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
-
-app.use(cookieParser());
+app.options(/.*/, cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use("/videos/files", express.static(path.join(__dirname, "videos")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
