@@ -3,7 +3,8 @@ import { refreshAccessToken } from "../components/AuthService/authService";
 
 export const api = axios.create({
   // ✅ Use REACT_APP_ prefix for CRA, not NEXT_PUBLIC_
-  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000/api",
+  baseURL: "https://test4-naqenk5i.b4a.run/api",
+  //process.env.REACT_APP_BASE_URL || "http://localhost:5000/api",
   withCredentials: true,
 });
 

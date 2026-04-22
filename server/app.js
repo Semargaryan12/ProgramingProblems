@@ -24,8 +24,9 @@ const app = express();
 app.set("trust proxy", 1);
 
 const allowedOrigins = [
-  "http://localhost:3000",
-  process.env.CLIENT_URL,
+  // "http://localhost:3000",
+  // process.env.CLIENT_URL,
+  "https://qwertyuio.xyz",
 ]
   .filter(Boolean)
   .map((o) => o.replace(/\/$/, ""));
@@ -48,7 +49,7 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 app.options("*", cors());
