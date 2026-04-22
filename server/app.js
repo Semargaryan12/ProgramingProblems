@@ -27,7 +27,9 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:5000",
   process.env.CLIENT_URL,
-].filter(Boolean).map((o) => o.replace(/\/$/, "")); // normalize trailing slashes
+]
+  .filter(Boolean)
+  .map((o) => o.replace(/\/$/, "")); // normalize trailing slashes
 
 console.log("Allowed origins:", allowedOrigins);
 
@@ -49,7 +51,7 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 // ✅ Handle preflight for all routes explicitly
