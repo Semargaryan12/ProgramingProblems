@@ -2,7 +2,7 @@ import axios from "axios";
 import { refreshAccessToken } from "../components/AuthService/authService";
 
 export const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "https://test4-c46qe7xb.b4a.run/api",
   withCredentials: true,
 });
 
