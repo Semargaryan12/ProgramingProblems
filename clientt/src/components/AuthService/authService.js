@@ -2,7 +2,7 @@ import axios from "axios";
 import { api } from "../../api/api";
 
 // ✅ basicAxios must also use the env var — never hardcode localhost
-export const api = axios.create({
+export const axsi = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000/api", // ✅ from Vercel env vars
   withCredentials: true,
 });
@@ -33,7 +33,7 @@ export const registerService = async (userInfo) => {
 export const refreshAccessToken = async () => {
   try {
     // ✅ Use basicAxios here to avoid interceptor infinite loop
-    const { data } = await basicAxios.post("/auth/refresh");
+    const { data } = await axsi.post("/auth/refresh");
     const { accessToken, user } = data;
 
     if (accessToken) localStorage.setItem("accessToken", accessToken);
