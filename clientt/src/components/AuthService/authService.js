@@ -35,7 +35,7 @@ export const registerService = async (userInfo) => {
 export const refreshAccessToken = async () => {
   try {
     // FIX: Use basicAxios here, NOT the 'api' instance
-    const { data } = await basicAxios.post("/auth/refresh");
+    const { data } = await api.post("/auth/refresh");
     const { accessToken, user } = data;
 
     if (accessToken) {
