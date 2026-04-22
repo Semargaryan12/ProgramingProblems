@@ -56,7 +56,7 @@ const QuizListUser = () => {
       return;
     }
     fetchQuizzes();
-  }, [language]);
+  }, [language, fetchQuizzes, navigate, user]);
 
   const formatLanguage = (lang) => {
     const map = {

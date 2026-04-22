@@ -5,7 +5,6 @@ import { LanguageContext } from "../../context/LanguageContext";
 const API_URL = "http://localhost:5000";
 
 const ProgrammingProblems = () => {
-  const navigate = useNavigate();
 
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);

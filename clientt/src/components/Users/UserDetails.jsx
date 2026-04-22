@@ -1,6 +1,6 @@
 import QuestionsSuBmisions from "../question/QuestionsSumbisions";
 import UserQuizesAnswers from "../quiz/UserQuizesAnswers";
-import UserLaboratorAnswers from "../labs/LabSubmissions";
+// import UserLaboratorAnswers from "../labs/LabSubmissions";
 import CollapsibleSection from "./CollapsibleSection";
 import { useState } from "react";
 const UserDetails = ({ user, onBack }) => {

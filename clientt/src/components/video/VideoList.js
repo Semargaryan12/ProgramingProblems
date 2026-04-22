@@ -60,7 +60,7 @@ const VideoList = () => {
     if (language) {
       fetchVideos();
     }
-  }, [language]);
+  }, [language, fetchVideos]);
 
   const deleteVideo = async (id) => {
     try {

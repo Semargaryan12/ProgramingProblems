@@ -115,7 +115,7 @@ const fetchResources = async () => {
       return;
     }
     fetchResources();
-  }, [currentLang]);
+  }, [currentLang, fetchResources]);
 
   if (!currentLang) {
     return (
