@@ -23,15 +23,26 @@ const app = express();
 const client_URL = process.env.client_URL?.replace(/\/$/, "");
 console.log(client_URL);
 app.set("trust proxy", 1);
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.client_URL,
+].filter(Boolean); // removes undefined
+
 app.use(
   cors({
-    origin: true,
-    methods: "GET, POST, DELETE, PUT",
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
 
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("CORS blocked for: " + origin));
+    },
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
