@@ -20,48 +20,40 @@ connecDB();
 
 const app = express();
 
-// ✅ Must be set before any middleware
 app.set("trust proxy", 1);
 
 const allowedOrigins = [
-  // "http://localhost:3000",
-  // process.env.CLIENT_URL,
+  "http://localhost:3000",
   "https://qwertyuio.xyz",
-]
-  .filter(Boolean)
-  .map((o) => o.replace(/\/$/, ""));
+].map((o) => o.replace(/\/$/, ""));
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    const normalized = origin.replace(/\/$/, "");
+    if (allowedOrigins.includes(normalized)) {
+      return callback(null, true);
+    }
+    console.warn("❌ CORS blocked:", { origin, allowedOrigins });
+    return callback(new Error("CORS blocked for: " + origin));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-      const normalized = origin.replace(/\/$/, "");
-
-      if (allowedOrigins.includes(normalized)) {
-        return callback(null, true);
-      }
-
-      // ✅ Detailed log so you can see exactly what's being blocked
-      console.warn("❌ CORS blocked:", { origin, allowedOrigins });
-      return callback(new Error("CORS blocked for: " + origin));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
-
-app.options("*", cors());
+// ✅ Preflight must be FIRST before any other middleware
+app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/videos/files", express.static(path.join(__dirname, "videos")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-console.log("CLIENT_URL env:", process.env.CLIENT_URL);
+
 console.log("Allowed origins:", allowedOrigins);
-// Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/videos", videoRoutes);
