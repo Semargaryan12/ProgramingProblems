@@ -2,9 +2,8 @@ import axios from "axios";
 import { api } from "../../api/api";
 
 // ✅ basicAxios must also use the env var — never hardcode localhost
-const basicAxios = axios.create({
-  baseURL:
-    process.env.REACT_APP_BASE_URL || "programingschoolol-1c0ok92e.b4a.run/api",
+export const api = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:5000/api", // ✅ from Vercel env vars
   withCredentials: true,
 });
 

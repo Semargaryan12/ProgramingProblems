@@ -24,8 +24,8 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://qwertyuio.xyz",
-].map((o) => o.replace(/\/$/, ""));
+  process.env.CLIENT_URL,       // ✅ from Back4App env vars
+].filter(Boolean).map((o) => o.replace(/\/$/, ""));
 
 const corsOptions = {
   origin: function (origin, callback) {
