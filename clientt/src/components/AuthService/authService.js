@@ -14,6 +14,8 @@ export const loginService = async (identifier, password) => {
     localStorage.setItem("user", JSON.stringify(data.user));
     return data;
   } catch (err) {
+    console.log(err);
+    
     throw new Error(err.response?.data?.error || "Սխալ");
   }
 };
