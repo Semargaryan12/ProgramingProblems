@@ -22,7 +22,7 @@ const app = express();
 
 const client_URL = process.env.client_URL?.replace(/\/$/, "");
 console.log(client_URL);
-
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: true,
