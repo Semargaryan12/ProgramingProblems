@@ -11,45 +11,57 @@ const { errorHandler } = require("./middlewares/error.middleware.js");
 const labsRoutes = require("./routes/labsRoutes");
 const lessonsRoutes = require("./routes/lessons.router.js");
 const superAdmiRoutes = require("./routes/superAdmin.routes.js");
-const compilerRoutes = require("./routes/compiler.routes"); // 1. Add this
+const compilerRoutes = require("./routes/compiler.routes");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-dotenv.config();
 
+dotenv.config();
 connecDB();
 
 const app = express();
 
-const client_URL = process.env.client_URL?.replace(/\/$/, "");
-console.log(client_URL);
+// ✅ Must be set before any middleware
 app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.client_URL,
-].filter(Boolean); // removes undefined
+  "http://localhost:5000",
+  process.env.CLIENT_URL,
+].filter(Boolean).map((o) => o.replace(/\/$/, "")); // normalize trailing slashes
 
+console.log("Allowed origins:", allowedOrigins);
+
+// ✅ CORS must come before cookieParser and routes
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow server-to-server / curl / Postman (no origin)
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      const normalized = origin.replace(/\/$/, "");
+      if (allowedOrigins.includes(normalized)) {
         return callback(null, true);
       }
 
+      console.warn("CORS blocked for origin:", origin);
       return callback(new Error("CORS blocked for: " + origin));
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+// ✅ Handle preflight for all routes explicitly
+app.options("*", cors());
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/videos/files", express.static(path.join(__dirname, "videos")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-//Routes
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/videos", videoRoutes);

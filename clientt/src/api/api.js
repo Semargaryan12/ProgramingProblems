@@ -2,21 +2,13 @@ import axios from "axios";
 import { refreshAccessToken } from "../components/AuthService/authService";
 
 export const api = axios.create({
-  baseURL: "https://test4-c46qe7xb.b4a.run/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
   withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
-
-  config.headers = config.headers || {};
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  } else {
-    delete config.headers.Authorization;
-  }
-
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
@@ -25,13 +17,14 @@ let failedQueue = [];
 
 const processQueue = (error, token = null) => {
   failedQueue.forEach((prom) => {
-    error ? prom.reject(error) : prom.resolve(token);
+    if (error) prom.reject(error);
+    else prom.resolve(token);
   });
   failedQueue = [];
 };
 
 api.interceptors.response.use(
-  (res) => res,
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
@@ -39,10 +32,12 @@ api.interceptors.response.use(
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
-        }).then((token) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          return api(originalRequest);
-        });
+        })
+          .then((token) => {
+            originalRequest.headers["Authorization"] = "Bearer " + token;
+            return api(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
       }
 
       originalRequest._retry = true;
@@ -50,17 +45,14 @@ api.interceptors.response.use(
 
       try {
         const { accessToken } = await refreshAccessToken();
-
+        localStorage.setItem("accessToken", accessToken); // ✅ persist new token
+        originalRequest.headers["Authorization"] = "Bearer " + accessToken;
         processQueue(null, accessToken);
-
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return api(originalRequest);
       } catch (err) {
         processQueue(err, null);
-
         localStorage.removeItem("accessToken");
         localStorage.removeItem("user");
-
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
