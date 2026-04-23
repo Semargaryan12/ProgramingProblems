@@ -24,7 +24,7 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.CLIENT_URL,       // ✅ from Back4App env vars
+  process.env.REACT_APP_BASE_URL,       // ✅ from Back4App env vars
 ].filter(Boolean).map((o) => o.replace(/\/$/, ""));
 
 const corsOptions = {
