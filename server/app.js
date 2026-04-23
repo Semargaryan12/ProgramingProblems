@@ -24,8 +24,10 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.REACT_APP_BASE_URL,       // ✅ from Back4App env vars
-].filter(Boolean).map((o) => o.replace(/\/$/, ""));
+  process.env.CLIENT_URL, // ✅ from Back4App env vars
+]
+  .filter(Boolean)
+  .map((o) => o.replace(/\/$/, ""));
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -43,8 +45,8 @@ const corsOptions = {
 };
 
 // ✅ Preflight must be FIRST before any other middleware
-app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
