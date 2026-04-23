@@ -64,6 +64,13 @@ app.use("/api/lessons", lessonsRoutes);
 app.use("/api/super", superAdmiRoutes);
 app.use("/api/compiler", compilerRoutes);
 
+app.use(express.static(path.join(__dirname, "clientt/build")));
+
+// ✅ Catch-all: send React app for any non-API route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "clientr/build", "index.html"));
+});
+
 app.use(errorHandler);
 
 module.exports = app;
