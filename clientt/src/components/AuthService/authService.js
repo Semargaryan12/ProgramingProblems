@@ -3,7 +3,7 @@ import { api } from "../../api/api";
 
 // ✅ basicAxios must also use the env var — never hardcode localhost
 export const axsi = axios.create({
-  baseURL: process.env.BASE_URL || "http://localhost:5000/api", // ✅ from Vercel env vars
+  baseURL: process.env.REACT_APP_BASE_URL, // ✅ REACT_APP_ prefix
   withCredentials: true,
 });
 

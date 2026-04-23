@@ -24,10 +24,10 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.CLIENT_URL, // ✅ from Back4App env vars
-]
-  .filter(Boolean)
-  .map((o) => o.replace(/\/$/, ""));
+  process.env.CLIENT_URL, // ✅ correct var name
+].filter(Boolean).map((o) => o.replace(/\/$/, ""));
+
+console.log("✅ Allowed origins:", allowedOrigins);
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -44,16 +44,15 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-// ✅ Preflight must be FIRST before any other middleware
-app.options(/.*/, cors(corsOptions));
+// ✅ preflight FIRST, then cors
+app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
-app.use(express.json());
+
 app.use(cookieParser());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/videos/files", express.static(path.join(__dirname, "videos")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-console.log("Allowed origins:", allowedOrigins);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
