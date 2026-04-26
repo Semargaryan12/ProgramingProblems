@@ -2,7 +2,9 @@ import axios from "axios";
 import { refreshAccessToken } from "../components/AuthService/authService";
 
 export const api = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL, // ✅ REACT_APP_ prefix
+  // ✅ Use REACT_APP_ prefix for CRA, not NEXT_PUBLIC_
+  // baseURL: "https://programingschoolol-1c0ok92e.b4a.run/api",
+   baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 
@@ -60,5 +62,5 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
