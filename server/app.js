@@ -24,8 +24,11 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.CLIENT_URL, // ✅ correct var name
-].filter(Boolean).map((o) => o.replace(/\/$/, ""));
+  " https://www.qwertyuio.xyz",
+  // ✅ correct var name
+]
+  .filter(Boolean)
+  .map((o) => o.replace(/\/$/, ""));
 
 console.log("✅ Allowed origins:", allowedOrigins);
 

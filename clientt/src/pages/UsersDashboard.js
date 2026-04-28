@@ -41,6 +41,33 @@ const IconCalendar = () => (
   </svg>
 );
 
+const IconMap = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+    <line x1="9" y1="3" x2="9" y2="18"/>
+    <line x1="15" y1="6" x2="15" y2="21"/>
+  </svg>
+);
+
+const IconCheck = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
+
+const IconLock = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </svg>
+);
+
+const IconStar = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+);
+
 /* ── Loader ──────────────────────────────────────────── */
 const Loader = () => (
   <div className="up-loader">
@@ -48,6 +75,193 @@ const Loader = () => (
     <span>Բեռնվում է...</span>
   </div>
 );
+
+/* ── Roadmap Data ────────────────────────────────────── */
+const FLOW_STEPS = [
+  { icon: "📖", label: "Կարդա դասը",        desc: "Նախ ծանոթացիր տեսական նյութին" },
+  { icon: "🎬", label: "Տեսադաս (անհրաժեշտության դեպքում)", desc: "Եթե նյութը պարզ չէ, դիտիր տեսադասը" },
+  { icon: "💻", label: "Լուծիր խնդիրը",     desc: "Կիրառիր գիտելիքը գործնականում" },
+  { icon: "✅", label: "Անցիր թեստը",        desc: "Ստուգիր քո իմացությունը" },
+];
+
+const ROADMAP = [
+  {
+    phase: 1,
+    phaseLabel: "C++",
+    color: "blue",
+    steps: [
+      {
+        id: 1,
+        title: "C++ — Հիմունքներ",
+        desc: "Ծրագրավորման առաջին քայլերը C++ լեզվով՝ փոփոխականներ, տիպեր, հիմնական գործողություններ։",
+        topics: ["Փոփոխականներ և տիպեր", "Պայմաններ (if/else)", "Ցիկլեր (for/while)", "Ֆունկցիաներ"],
+        recommended: true,
+      },
+      {
+        id: 2,
+        title: "C++ — Intermediate",
+        desc: "Ավելի խոր թեմաներ՝ զանգվածներ, pointer-ներ, հիշողության կառավարում։",
+        topics: ["Զանգվածներ", "Pointer-ներ", "Reference-ներ", "Struct"],
+      },
+      {
+        id: 3,
+        title: "C++ — OOP",
+        desc: "Օբյեկտ-կողմնորոշված ծրագրավորում C++-ով՝ class-եր, ժառանգություն, polymorphism։",
+        topics: ["Class / Object", "Constructor", "Ժառանգություն", "Polymorphism"],
+      },
+    ],
+  },
+  {
+    phase: 2,
+    phaseLabel: "Python",
+    color: "indigo",
+    steps: [
+      {
+        id: 4,
+        title: "Python — Հիմունքներ",
+        desc: "Python-ի պարզ ու ընթեռնելի syntax-ը, հիմնական կառուցվածքները։",
+        topics: ["Syntax & Indentation", "Ցուցակներ / Dict", "Ֆունկցիաներ", "Ֆայլեր"],
+      },
+      {
+        id: 5,
+        title: "Python — OOP & Գրադարաններ",
+        desc: "Class-եր Python-ում և ամենաշատ օգտագործվող ստանդարտ գրադարաններ։",
+        topics: ["Class / Inheritance", "Exception Handling", "os / sys", "json / csv"],
+      },
+    ],
+  },
+  {
+    phase: 3,
+    phaseLabel: "JavaScript",
+    color: "violet",
+    steps: [
+      {
+        id: 6,
+        title: "JavaScript — Հիմունքներ",
+        desc: "Վեբ ծրագրավորման հիմնական լեզուն՝ փոփոխականներ, ֆունկցիաներ, DOM։",
+        topics: ["let / const / var", "Ֆունկցիաներ & Arrow fn", "DOM Manipulation", "Events"],
+      },
+      {
+        id: 7,
+        title: "JavaScript — Async & ES6+",
+        desc: "Ժամանակակից JavaScript-ի հնարավորություններ՝ ասինխրոն ծրագրավորում, modules։",
+        topics: ["Promise / Async-Await", "Fetch API", "ES6+ Features", "Modules"],
+        isFinal: true,
+      },
+    ],
+  },
+];
+
+const COLOR_MAP = {
+  blue:    { pill: "up-pill--blue",   header: "up-card-header--blue",   step: "up-step--blue"   },
+  indigo:  { pill: "up-pill--indigo", header: "up-card-header--indigo", step: "up-step--indigo" },
+  violet:  { pill: "up-pill--violet", header: "up-card-header--violet", step: "up-step--violet" },
+  emerald: { pill: "up-pill--emerald",header: "up-card-header--emerald",step: "up-step--emerald"},
+  amber:   { pill: "up-pill--amber",  header: "up-card-header--amber",  step: "up-step--amber"  },
+};
+
+/* ── Roadmap Section ─────────────────────────────────── */
+const RoadmapSection = () => {
+  const [expanded, setExpanded] = useState(null);
+  const toggle = (id) => setExpanded(prev => prev === id ? null : id);
+
+  return (
+    <div className="up-roadmap-wrap">
+      <div className="up-roadmap-header">
+        <div className="up-roadmap-header-icon"><IconMap /></div>
+        <div>
+          <h2>Ուսումնական Ուղի</h2>
+          <p>Կայքի բովանդակությունը և դասերի խորհուրդ տրվող հաջորդականությունը</p>
+        </div>
+      </div>
+
+      {/* ── Lesson flow strip ── */}
+      <div className="up-flow-strip">
+        {FLOW_STEPS.map((fs, i) => (
+          <React.Fragment key={i}>
+            <div className="up-flow-step">
+              <span className="up-flow-icon">{fs.icon}</span>
+              <span className="up-flow-label">{fs.label}</span>
+              <span className="up-flow-desc">{fs.desc}</span>
+            </div>
+            {i < FLOW_STEPS.length - 1 && (
+              <div className="up-flow-arrow">→</div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* <div className="up-roadmap-body">
+        {ROADMAP.map((phase, pi) => {
+          const cls = COLOR_MAP[phase.color];
+          return (
+            <div key={phase.phase} className="up-phase">
+              <div className={`up-phase-label up-phase-label--${phase.color}`}>
+                <span className="up-phase-num">{phase.phase}</span>
+                {phase.phaseLabel}
+              </div>
+
+              <div className="up-phase-steps">
+                {phase.steps.map((step) => {
+                  const isOpen = expanded === step.id;
+                  return (
+                    <div
+                      key={step.id}
+                      className={`up-step ${cls.step} ${isOpen ? 'up-step--open' : ''}`}
+                    >
+                      <div className="up-step-dot">
+                        {step.isFinal
+                          ? <IconStar />
+                          : <span className="up-step-num">{step.id}</span>
+                        }
+                      </div>
+
+                      <button
+                        className="up-step-card"
+                        onClick={() => toggle(step.id)}
+                        aria-expanded={isOpen}
+                      >
+                        <div className="up-step-top">
+                          <div className="up-step-info">
+                            <span className="up-step-title">{step.title}</span>
+                            {step.recommended && (
+                              <span className="up-step-rec-badge">Սկսել այստեղից</span>
+                            )}
+                            {step.isFinal && (
+                              <span className="up-step-final-badge">Ավարտ</span>
+                            )}
+                          </div>
+                          <span className={`up-step-chevron ${isOpen ? 'up-step-chevron--up' : ''}`}>›</span>
+                        </div>
+
+                        {isOpen && (
+                          <div className="up-step-detail">
+                            <p className="up-step-desc">{step.desc}</p>
+                            <div className="up-step-topics">
+                              {step.topics.map(t => (
+                                <span key={t} className={`up-topic-chip up-topic-chip--${phase.color}`}>
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+
+                {pi < ROADMAP.length - 1 && (
+                  <div className="up-phase-arrow">↓</div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div> */}
+    </div>
+  );
+};
 
 /* ── Main component ──────────────────────────────────── */
 const UserProfile = () => {
@@ -89,7 +303,6 @@ const UserProfile = () => {
     });
   };
 
-  /* ── States ──────────────────────────────────────── */
   if (loading) return <Loader />;
 
   if (error) return (
@@ -104,8 +317,8 @@ const UserProfile = () => {
     </div>
   );
 
-  const taskCount = userData.questionAnswers?.length   ?? 0;
-  const quizCount = userData.quizSubmissions?.length   ?? 0;
+  const taskCount  = userData.questionAnswers?.length ?? 0;
+  const quizCount  = userData.quizSubmissions?.length ?? 0;
   const totalScore = userData.quizSubmissions?.reduce((s, q) => s + (q.score ?? 0), 0) ?? 0;
 
   return (
@@ -163,6 +376,11 @@ const UserProfile = () => {
             Անցիր լեզուների ուսուցումը հերթականությամբ՝ հիմունքներից դեպի բարդագույնները
           </div>
         </div>
+      </div>
+
+      {/* ── Roadmap ─────────────────────────────────── */}
+      <div className="up-roadmap-outer">
+        <RoadmapSection />
       </div>
 
       {/* ── Main grid ───────────────────────────────── */}

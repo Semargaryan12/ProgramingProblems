@@ -4,7 +4,7 @@ import { refreshAccessToken } from "../components/AuthService/authService";
 export const api = axios.create({
   // ✅ Use REACT_APP_ prefix for CRA, not NEXT_PUBLIC_
   // baseURL: "https://programingschoolol-1c0ok92e.b4a.run/api",
-   baseURL: "http://localhost:5000",
+  baseURL: "https://programingschoolol-2wfl21yc.b4a.run/api",
   withCredentials: true,
 });
 
