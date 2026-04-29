@@ -24,36 +24,28 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  " https://www.qwertyuio.xyz",
-  // ✅ correct var name
-]
-  .filter(Boolean)
-  .map((o) => o.replace(/\/$/, ""));
-
-console.log("✅ Allowed origins:", allowedOrigins);
+  "https://qwertyuio.xyz",
+  "https://www.qwertyuio.xyz",
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    const normalized = origin.replace(/\/$/, "");
-    if (allowedOrigins.includes(normalized)) {
+
+    if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    console.warn("❌ CORS blocked:", { origin, allowedOrigins });
-    return callback(new Error("CORS blocked for: " + origin));
+
+    console.log("Blocked origin:", origin);
+    return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-// ✅ preflight FIRST, then cors
+app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
-
-app.use(cors({
-  origin: "https://qwertyuio.xyz",
-  credentials: true
-}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
