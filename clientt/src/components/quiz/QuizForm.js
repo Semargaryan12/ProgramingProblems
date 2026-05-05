@@ -1,209 +1,171 @@
 import React, { useState } from "react";
-import {
-  FaPlus,
-  FaTrashAlt,
-  FaCheck,
-  FaLayerGroup,
-  FaLanguage,
-  FaTrophy,
-} from "react-icons/fa";
-import "./styles/quizForm.css";
+import { FaPlus, FaTrashAlt, FaCheck, FaLayerGroup, FaLanguage, FaTrophy } from "react-icons/fa";
 import { LANGUAGES } from "../../constants/languages";
-const QuizForm = ({ onSubmit, loading }) => {
-  const initialQuestion = {
-    text: "",
-    options: ["", "", "", ""],
-    correctAnswerIndex: null,
-  };
+import "./styles/quizForm.css";
 
+const initialQuestion = () => ({
+  text: "",
+  options: ["", "", "", ""],
+  correctAnswerIndex: null,
+});
+
+const QuizForm = ({ onSubmit, loading }) => {
   const [isFinal, setIsFinal] = useState(false);
   const [language, setLanguage] = useState("");
   const [title, setTitle] = useState("");
-  const [questions, setQuestions] = useState([initialQuestion]);
+  const [questions, setQuestions] = useState([initialQuestion()]);
 
-  const updateQuestion = (qIndex, callback) => {
-    setQuestions((prev) =>
-      prev.map((q, i) => (i === qIndex ? callback(q) : q)),
-    );
-  };
+  const updateQuestion = (qIndex, fn) =>
+    setQuestions((prev) => prev.map((q, i) => (i === qIndex ? fn(q) : q)));
 
-  const handleAddQuestion = () =>
-    setQuestions([...questions, { ...initialQuestion }]);
-
-  const handleRemoveQuestion = (index) => {
-    if (questions.length > 1) {
-      setQuestions(questions.filter((_, i) => i !== index));
-    }
-  };
-
-  const handleOptionChange = (qIndex, optIndex, value) => {
+  const handleOptionChange = (qIndex, optIndex, value) =>
     updateQuestion(qIndex, (q) => {
-      const newOptions = [...q.options];
-      newOptions[optIndex] = value;
-      return { ...q, options: newOptions };
+      const options = [...q.options];
+      options[optIndex] = value;
+      return { ...q, options };
     });
-  };
 
-  const handleRemoveOption = (qIndex, optIndex) => {
+  const handleRemoveOption = (qIndex, optIndex) =>
     updateQuestion(qIndex, (q) => {
-      const newOptions = q.options.filter((_, i) => i !== optIndex);
-      const newCorrectIndex =
-        q.correctAnswerIndex === optIndex
-          ? null
-          : q.correctAnswerIndex > optIndex
-            ? q.correctAnswerIndex - 1
-            : q.correctAnswerIndex;
-      return { ...q, options: newOptions, correctAnswerIndex: newCorrectIndex };
+      const options = q.options.filter((_, i) => i !== optIndex);
+      const correct =
+        q.correctAnswerIndex === optIndex ? null
+        : q.correctAnswerIndex > optIndex ? q.correctAnswerIndex - 1
+        : q.correctAnswerIndex;
+      return { ...q, options, correctAnswerIndex: correct };
     });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const isValid = questions.every(
-      (q) =>
-        q.options.filter((opt) => opt.trim()).length >= 2 &&
-        q.correctAnswerIndex !== null,
-    );
-
-    if (!title.trim() || !language.trim()) {
-      alert("Լրացրեք վերնագիրը և լեզուն:");
+    if (!title.trim() || !language) {
+      alert("Լրացրեք վերնագիրը և լեզուն։");
       return;
     }
 
-    if (!isValid) {
-      alert("Խնդրում ենք լրացնել բոլոր հարցերը և նշել ճիշտ պատասխանները:");
+    const allValid = questions.every(
+      (q) =>
+        q.options.filter((o) => o.trim()).length >= 2 &&
+        q.correctAnswerIndex !== null
+    );
+
+    if (!allValid) {
+      alert("Լրացրեք բոլոր հարցերը և նշեք ճիշտ պատասխանները։");
       return;
     }
 
     onSubmit({ title, language, isFinal, questions });
-
-    // Reset form
     setTitle("");
-    setIsFinal(false);
     setLanguage("");
-    setQuestions([{ ...initialQuestion }]);
+    setIsFinal(false);
+    setQuestions([initialQuestion()]);
   };
-  const handleInputChange = (e) => {
-    setLanguage(e.target.value);
-  };
-  return (
-    <div className="quiz-container">
-      <header className="quiz-header-main">
-        <div className="header-badge">Admin Constructor</div>
-        <h2>Թեստի Ստեղծում</h2>
 
-        <div className="main-fields-card">
-          <div className="input-group">
-            <label className="field-label">
-              <FaLayerGroup /> Թեստի Անվանում
-            </label>
+  return (
+    <div className="qf-wrap">
+      {/* ── Meta ── */}
+      <header className="qf-header">
+        <span className="qf-eyebrow">Admin Constructor</span>
+        <h2 className="qf-heading">Թեստի Ստեղծում</h2>
+
+        <div className="qf-meta-card">
+          <div className="qf-field">
+            <label className="qf-label"><FaLayerGroup /> Անվանում</label>
             <input
-              className="fancy-title-input"
+              className="qf-input"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              placeholder="Թեստի անվանումը..."
               required
             />
           </div>
 
-          <div className="horizontal-fields">
-            <div className="input-group flex-2">
-              <label className="field-label">
-                <FaLanguage /> Լեզու
-              </label>
+          <div className="qf-row">
+            <div className="qf-field qf-field--grow">
+              <label className="qf-label"><FaLanguage /> Լեզու</label>
               <select
-                className="fancy-sub-input" // Օգտագործեք նույն դասը, ինչ input-ների համար
-                name="language"
+                className="qf-input"
                 value={language}
-                onChange={handleInputChange}
+                onChange={(e) => setLanguage(e.target.value)}
                 required
               >
                 <option value="">Ընտրել լեզուն</option>
-                {LANGUAGES.map((lang) => (
-                  <option key={lang.value} value={lang.value}>
-                    {lang.label}
-                  </option>
+                {LANGUAGES.map((l) => (
+                  <option key={l.value} value={l.value}>{l.label}</option>
                 ))}
               </select>
             </div>
 
-            <div className="input-group flex-1">
-              <label className="field-label">
-                <FaTrophy /> Կարգավիճակ
-              </label>
-              <div
-                className={`final-toggle ${isFinal ? "active" : ""}`}
-                onClick={() => setIsFinal(!isFinal)}
+            <div className="qf-field">
+              <label className="qf-label"><FaTrophy /> Կարգավիճակ</label>
+              <button
+                type="button"
+                className={`qf-toggle ${isFinal ? "qf-toggle--on" : ""}`}
+                onClick={() => setIsFinal((v) => !v)}
               >
-                <div className="toggle-slider"></div>
-                <span>{isFinal ? "Միջանկյան" : "Վերջնական"}</span>
-              </div>
+                <span className="qf-toggle-dot" />
+                {isFinal ? "Վերջնական" : "Միջանկյալ"}
+              </button>
             </div>
           </div>
         </div>
       </header>
 
-      <form onSubmit={handleSubmit} className="quiz-form">
+      {/* ── Questions ── */}
+      <form onSubmit={handleSubmit} className="qf-form">
         {questions.map((question, qIndex) => (
-          <section key={qIndex} className="question-card">
-            <div className="card-header">
-              <span className="question-number">Հարց {qIndex + 1}</span>
-              <button
-                type="button"
-                onClick={() => handleRemoveQuestion(qIndex)}
-                className="btn-icon delete"
-              >
-                <FaTrashAlt />
-              </button>
+          <section key={qIndex} className="qf-card">
+            <div className="qf-card-head">
+              <span className="qf-q-num">Հարց {qIndex + 1}</span>
+              {questions.length > 1 && (
+                <button
+                  type="button"
+                  className="qf-icon-btn"
+                  onClick={() => setQuestions((p) => p.filter((_, i) => i !== qIndex))}
+                  aria-label="Remove question"
+                >
+                  <FaTrashAlt />
+                </button>
+              )}
             </div>
 
             <input
-              className="question-text-input"
+              className="qf-input qf-input--question"
               type="text"
               value={question.text}
-              onChange={(e) =>
-                updateQuestion(qIndex, (q) => ({ ...q, text: e.target.value }))
-              }
+              onChange={(e) => updateQuestion(qIndex, (q) => ({ ...q, text: e.target.value }))}
               placeholder="Մուտքագրեք հարցը..."
               required
             />
 
-            <div className="options-grid">
-              {question.options.map((option, optIndex) => (
+            <div className="qf-options">
+              {question.options.map((opt, optIndex) => (
                 <div
                   key={optIndex}
-                  className={`option-row ${question.correctAnswerIndex === optIndex ? "is-correct" : ""}`}
+                  className={`qf-option ${question.correctAnswerIndex === optIndex ? "qf-option--correct" : ""}`}
                 >
-                  <div
-                    className="radio-indicator"
-                    onClick={() =>
-                      updateQuestion(qIndex, (q) => ({
-                        ...q,
-                        correctAnswerIndex: optIndex,
-                      }))
-                    }
+                  <button
+                    type="button"
+                    className="qf-option-letter"
+                    onClick={() => updateQuestion(qIndex, (q) => ({ ...q, correctAnswerIndex: optIndex }))}
                   >
                     {String.fromCharCode(65 + optIndex)}
-                  </div>
-
+                  </button>
                   <input
                     type="text"
-                    value={option}
-                    onChange={(e) =>
-                      handleOptionChange(qIndex, optIndex, e.target.value)
-                    }
+                    value={opt}
+                    onChange={(e) => handleOptionChange(qIndex, optIndex, e.target.value)}
                     placeholder={`Տարբերակ ${optIndex + 1}`}
-                    required
                   />
-
                   {question.options.length > 2 && (
                     <button
                       type="button"
+                      className="qf-icon-btn qf-icon-btn--sm"
                       onClick={() => handleRemoveOption(qIndex, optIndex)}
-                      className="btn-remove-opt"
+                      aria-label="Remove option"
                     >
-                      <FaTrashAlt size={12} />
+                      <FaTrashAlt />
                     </button>
                   )}
                 </div>
@@ -212,30 +174,25 @@ const QuizForm = ({ onSubmit, loading }) => {
 
             <button
               type="button"
-              className="btn-add-opt"
-              onClick={() =>
-                updateQuestion(qIndex, (q) => ({
-                  ...q,
-                  options: [...q.options, ""],
-                }))
-              }
+              className="qf-add-opt"
+              onClick={() => updateQuestion(qIndex, (q) => ({ ...q, options: [...q.options, ""] }))}
             >
               <FaPlus /> Ավելացնել Տարբերակ
             </button>
           </section>
         ))}
 
-        <footer className="form-actions">
+        <footer className="qf-footer">
           <button
             type="button"
-            className="btn-secondary-action"
-            onClick={handleAddQuestion}
+            className="qf-btn qf-btn--add"
+            onClick={() => setQuestions((p) => [...p, initialQuestion()])}
           >
             <FaPlus /> Ավելացնել Հարց
           </button>
           <button
             type="submit"
-            className="btn-primary-action"
+            className="qf-btn qf-btn--submit"
             disabled={loading}
           >
             <FaCheck /> {loading ? "Մշակվում է..." : "Հաստատել Թեստը"}

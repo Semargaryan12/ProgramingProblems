@@ -22,36 +22,37 @@ const app = express();
 
 app.set("trust proxy", 1);
 
+// ✅ CORS (simplified for production)
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://qwertyuio.xyz",
-  "https://www.qwertyuio.xyz",
-];
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
-    console.log("Blocked origin:", origin);
-    return callback(new Error("Not allowed by CORS"));
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+      return callback(new Error("CORS blocked: " + origin));
+    },
+    credentials: true,
+  })
+);
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// ✅ Middlewares
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ✅ Static folders (uploads, videos)
 app.use("/videos/files", express.static(path.join(__dirname, "videos")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// ✅ API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/videos", videoRoutes);
@@ -62,13 +63,23 @@ app.use("/api/lessons", lessonsRoutes);
 app.use("/api/super", superAdmiRoutes);
 app.use("/api/compiler", compilerRoutes);
 
-app.use(express.static(path.join(__dirname, "clientt/build")));
+// ✅ Serve React ONLY in production
+if (process.env.NODE_ENV === "production") {
+  const clientPath = path.join(__dirname, "client", "build");
 
-// ✅ Catch-all: send React app for any non-API route
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "clientr/build", "index.html"));
+  app.use(express.static(clientPath));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientPath, "index.html"));
+  });
+}
+
+// ✅ Health check (very useful for Render)
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
 
+// ✅ Error handler (must be last)
 app.use(errorHandler);
 
 module.exports = app;

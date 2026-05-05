@@ -112,7 +112,7 @@ const UserQuestionsList = () => {
       } catch (err) {
         if (err.name !== "CanceledError" && err.name !== "AbortError") {
           console.error("Fetch error:", err);
-          showToast("Հարցերը բեռնելը ձախողվեց", "error");
+          showToast("Առաջադրանքներ բեռնելը ձախողվեց", "error");
         }
       } finally {
         setLoading(false);
@@ -133,34 +133,51 @@ const UserQuestionsList = () => {
   }, []);
 
   /* ── Run code ─────────────────────────────────────── */
-  const handleRunCode = useCallback(
-    async (qId) => {
-      const code = codeInputs[qId];
-      if (!code?.trim()) {
-        showToast("Կոդ գրված չէ", "error");
-        return;
+const handleRunCode = useCallback(
+  async (qId) => {
+    const code = codeInputs[qId];
+    if (!code?.trim()) {
+      showToast("Կոդ գրված չէ", "error");
+      return;
+    }
+
+    setIsRunning((p) => ({ ...p, [qId]: true }));
+    setOutputs((p) => ({ ...p, [qId]: "⏳ Կատարվում է..." }));
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/compiler/execute",
+        { code, language: globalLanguage.toLowerCase() },
+        { timeout: 30000 },
+      );
+
+      const { output, error, exitCode } = res.data;
+
+      // Build display result — show stderr when stdout is empty
+      let result = "";
+
+      if (output?.trim()) {
+        result += output;
       }
 
-      setIsRunning((p) => ({ ...p, [qId]: true }));
-      setOutputs((p) => ({ ...p, [qId]: "⏳ Կատարվում է..." }));
-
-      try {
-        const res = await axios.post(
-          "http://localhost:5000/api/compiler/execute",
-          { code, language: globalLanguage.toLowerCase() },
-          { timeout: 30000 },
-        );
-        const result = res.data?.output ?? res.data?.error ?? "✓ Ելք չկա";
-        setOutputs((p) => ({ ...p, [qId]: result }));
-      } catch (err) {
-        const msg = err.response?.data?.error || err.message || "Անհայտ սխալ";
-        setOutputs((p) => ({ ...p, [qId]: `❌ Error: ${msg}` }));
-      } finally {
-        setIsRunning((p) => ({ ...p, [qId]: false }));
+      if (error?.trim()) {
+        result += (result ? "\n\n" : "") + `❌ Stderr:\n${error}`;
       }
-    },
-    [codeInputs, globalLanguage, showToast],
-  );
+
+      if (!result) {
+        result = exitCode === 0 ? "✓ Ելք չկա" : `❌ Exited with code ${exitCode}`;
+      }
+
+      setOutputs((p) => ({ ...p, [qId]: result }));
+    } catch (err) {
+      const msg = err.response?.data?.error || err.message || "Անհայտ սխալ";
+      setOutputs((p) => ({ ...p, [qId]: `❌ Error: ${msg}` }));
+    } finally {
+      setIsRunning((p) => ({ ...p, [qId]: false }));
+    }
+  },
+  [codeInputs, globalLanguage, showToast],
+);
 
   /* ── Submit code ──────────────────────────────────── */
   const handleSubmitCode = useCallback(
@@ -255,7 +272,7 @@ const UserQuestionsList = () => {
           ) : filtered.length === 0 ? (
             <div className="empty-state">
               <FaCode className="empty-icon" />
-              <p>Հարցեր չեն գտնվել</p>
+              <p>Առաջադրանքներ չեն գտնվել</p>
             </div>
           ) : (
             <div className="questions-grid">
